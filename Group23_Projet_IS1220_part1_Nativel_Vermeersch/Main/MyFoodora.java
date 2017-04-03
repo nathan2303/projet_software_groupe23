@@ -1,3 +1,4 @@
+package Main;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -6,6 +7,11 @@ import Policies.DeliveryPolicy;
 import Policies.ProfitPolicy;
 import Users.Restaurant;
 
+/**
+ * the core system, it is a singleton
+ * @author natha
+ *
+ */
 public class MyFoodora {
 
   public double markupPercentage;
@@ -15,6 +21,7 @@ public class MyFoodora {
   public ArrayList<Restaurant> restaurants;
 
   public ArrayList<Order> completedOrders;
+  
 
   public Date currentDate;
 
@@ -22,12 +29,12 @@ public class MyFoodora {
 
   public ProfitPolicy profitPolicy;
   
-  public MyFoodora instance = null;
+  public static MyFoodora instance = null;
   
   private MyFoodora(){
   }
   
-  public MyFoodora getInstance(){
+  public static MyFoodora getInstance(){
 	  if (instance == null)
 		  instance = new MyFoodora();
 	  return instance;
