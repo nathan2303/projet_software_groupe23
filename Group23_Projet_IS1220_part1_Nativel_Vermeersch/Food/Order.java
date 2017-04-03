@@ -14,9 +14,22 @@ public class Order {
 	private Date date;
 
 	public Order() {
+		
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	public Order(Customer customer, Restaurant restaurant, ArrayList<Dish> content, Date date) {
+		super();
+		this.customer = customer;
+		this.restaurant = restaurant;
+		this.content = content;
+		this.date = new Date();
+	}
+
+
+
 	public static void main(String[] args) {
 		System.out.println(Date.getDate());
 	}
