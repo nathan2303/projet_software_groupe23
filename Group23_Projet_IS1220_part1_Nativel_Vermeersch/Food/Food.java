@@ -1,5 +1,7 @@
 package Food;
 import Users.Visitor;
+
+
 public abstract class Food {
 
   protected double price;

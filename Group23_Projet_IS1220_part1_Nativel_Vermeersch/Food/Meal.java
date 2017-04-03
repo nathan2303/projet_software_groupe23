@@ -10,6 +10,17 @@ public abstract class Meal extends Food {
 
   protected DishType mealType;
   
+  public Meal(){
+	  
+  }
+  
+  public Meal(ArrayList<Dish> dishes){
+	  super.name = dishes.toString();
+	  this.dishes=dishes;
+	  super.price=computeMealPrice(this.dishes);
+	  this.mealType=findMealType(this.dishes);
+  }
+  
   public Meal(String name, ArrayList<Dish> dishes){
 	  super.name = name;
 	  this.dishes=dishes;
