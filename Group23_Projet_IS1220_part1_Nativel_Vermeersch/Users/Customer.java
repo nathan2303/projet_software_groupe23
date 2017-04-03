@@ -2,6 +2,7 @@ package Users;
 import java.util.ArrayList;
 
 import Food.Food;
+import Food.Order;
 
 public class Customer extends User implements Observer {
 
@@ -34,15 +35,20 @@ public class Customer extends User implements Observer {
 	
 	
 	public void order(ArrayList<Food> content, Restaurant r) {
+		Order order = new Order();
+		
+		
 	  }
 	
-	  public void register() {
+	public void registerNotifications(Restaurant r) {
+		r.registerObserver(this);
 	  }
 	
-	  public void unregister() {
+	public void unregisterNotifications(Restaurant r) {
+		r.removeObserver(this);
 	  }
 	
-	  public void update(Restaurant r) {
+	public void update(Restaurant r) {
 		  System.out.println("Customer " + name + "has received the promotional offer from " + r.getName());
 		  System.out.println(r.getSpecialDiscountFactor() + " discount for the meals of the week!");
 	  }

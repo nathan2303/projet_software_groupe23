@@ -1,4 +1,7 @@
 package Users;
+
+import Main.MyFoodora;
+
 public abstract class User {
 
   public int id;
@@ -8,6 +11,8 @@ public abstract class User {
   public String password;
   
   private static int Counter = 0;
+  
+  protected MyFoodora system = MyFoodora.getInstance();
   
   
   public User(){

@@ -23,7 +23,7 @@ public class FullMeal extends Meal {
 	 * @param dishes
 	 * @throws InvalidFullMealException
 	 */
-	private void checkFullMeal(ArrayList<Dish> dishes) throws InvalidFullMealException {
+	private static void checkFullMeal(ArrayList<Dish> dishes) throws InvalidFullMealException {
 		int starterCounter=0;
 		int maindishCounter=0;
 		int dessertCounter=0;

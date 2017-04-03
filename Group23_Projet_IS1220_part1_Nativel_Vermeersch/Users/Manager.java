@@ -8,7 +8,7 @@ public class Manager extends User {
 	
 	private String surname;
 	
-	private MyFoodora myFoodora = MyFoodora.getInstance();
+
 	
 	public Manager(String name, String surname, String username, String password) {
 		super(username, password);
