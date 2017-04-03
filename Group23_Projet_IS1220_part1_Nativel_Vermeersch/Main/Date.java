@@ -3,7 +3,6 @@ package Main;
 import java.util.HashMap;
 
 /**
- * the class for setting and getting the date. Begins on SaturcurrentDay 1st April 2017.
  * We consider that we cannot move to the next month (for simplicity purposes)
  * So the user can only move from 1st April to 30th April
  * @author natha
