@@ -12,91 +12,101 @@ import java.util.HashMap;
 
 public class Date {
 	
-	private static int day=1;
-	private static String dayName="Saturday";
-	private static int week=13;
-	private static HashMap<Integer, String> dayNames = createHashMap();
+	private int day;
+	private int week;
+	private String dayName;
+	private static int currentDay=1;
+	private static String currentDayName="SaturcurrentDay";
+	private static int currentWeek=13;
+	private static HashMap<Integer, String> currentDayNames = createHashMap();
 
+	/**
+	 * instance of date, which is used for history purposes
+	 * one must not confuse day and currentDay (static), etc.
+	 */
 	public Date() {
+		this.day=currentDay;
+		this.week=currentWeek;
+		this.dayName=currentDayName;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public static void goTomorrow(){
-		day+=1;
-		dayName=findDayName(day);
-		week=findWeek(day);
+		currentDay+=1;
+		currentDayName=findCurrentDayName(currentDay);
+		currentWeek=findCurrentWeek(currentDay);
 		
 	}
 	
 	
-	public static int getDay() {
-		return day;
+	public static int getCurrentDay() {
+		return currentDay;
 	}
 
-	public static void setDay(int day) {
-		Date.day = day;
+	public static void setCurrentDay(int currentDay) {
+		Date.currentDay = currentDay;
 	}
 
-	public static String getDayName() {
-		return dayName;
+	public static String getCurrentDayName() {
+		return currentDayName;
 	}
 
-	public static void setDayName(String dayName) {
-		Date.dayName = dayName;
+	public static void setCurrentDayName(String currentDayName) {
+		Date.currentDayName = currentDayName;
 	}
 
-	public static int getWeek() {
-		return week;
+	public static int getCurrentWeek() {
+		return currentWeek;
 	}
 
-	public static void setWeek(int week) {
-		Date.week = week;
+	public static void setCurrentWeek(int currentWeek) {
+		Date.currentWeek = currentWeek;
 	}
 
-	private static String findDayName(int day){
-		return dayNames.get(day%7);
+	private static String findCurrentDayName(int currentDay){
+		return currentDayNames.get(currentDay%7);
 			
 	}
 	
 	private static HashMap<Integer,String> createHashMap(){
 		HashMap<Integer,String> res = new HashMap<Integer,String>();
-		res.put(1, "Saturday");
-		res.put(2, "Sunday");
-		res.put(3, "Monday");
-		res.put(4, "Tuesday");
-		res.put(5, "Wednesday");
-		res.put(6,"Thursday");
-		res.put(0, "Friday");
+		res.put(1, "SaturcurrentDay");
+		res.put(2, "SuncurrentDay");
+		res.put(3, "MoncurrentDay");
+		res.put(4, "TuescurrentDay");
+		res.put(5, "WednescurrentDay");
+		res.put(6,"ThurscurrentDay");
+		res.put(0, "FricurrentDay");
 		return res;
 		
 	}
 	
-	private static int findWeek(int day){
-		if (day==1)
+	private static int findCurrentWeek(int currentDay){
+		if (currentDay==1)
 			return(13);
-		if (day==2)
+		if (currentDay==2)
 			return(13);
-		return(13+((int)((day-3)/7)+1));
+		return(13+((int)((currentDay-3)/7)+1));
 	}
 	
-	public static void setDate(int number){
-		day=number;
-		dayName=findDayName(day);
-		week=findWeek(day);
+	public static void setCurrentDate(int number){
+		currentDay=number;
+		currentDayName=findCurrentDayName(currentDay);
+		currentWeek=findCurrentWeek(currentDay);
 		
 	}
 	
 	public static String getDate(){
-		return dayName + " " + day + " April 2017";
+		return currentDayName + " " + currentDay + " April 2017";
 	}
 	
 	public static void main(String[] args) {
 
-		System.out.println(findWeek(2));
+		System.out.println(findCurrentWeek(2));
 
-		System.out.println(findWeek(7));
+		System.out.println(findCurrentWeek(7));
 
-		System.out.println(findWeek(10));
+		System.out.println(findCurrentWeek(10));
 		
 		System.out.println(getDate());
 		
