@@ -38,7 +38,6 @@ public class MyFoodora {
 	  if (instance == null)
 		  instance = new MyFoodora();
 	  return instance;
-			  
   }
 
 }
