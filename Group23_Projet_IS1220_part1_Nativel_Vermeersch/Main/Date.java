@@ -51,7 +51,18 @@ public class Date {
 		currentWeek=findCurrentWeek(counter);
 		currentMonth=findCurrentMonth(counter);
 		currentMonthName=findCurrentMonthName(currentMonth);
-		
+	}
+	/**
+	 * advance of a number of days (static)
+	 * @param numberOfDays
+	 */
+	public static void advanceInTime(int numberOfDays){
+		counter+=numberOfDays;
+		currentDay=findCurrentDay(counter);
+		currentDayName=findCurrentDayName(counter);
+		currentWeek=findCurrentWeek(counter);
+		currentMonth=findCurrentMonth(counter);
+		currentMonthName=findCurrentMonthName(currentMonth);
 	}
 	
 	
@@ -85,8 +96,27 @@ public class Date {
 	 * @return day of the month
 	 */
 	private static int findCurrentDay(int n){
-		int x = n%30;
-		return((x==0) ? 30 : x);
+		if (n<=30)
+			return n;
+		if (n<=61)
+			return n-30;
+		if (n<=61+30)
+			return n-61;
+		if (n<=91+31)
+			return n-91;
+		if (n<=122+31)
+			return n-122;
+		if (n<=153+30)
+			return n-153;
+		if (n<=183+31)
+			return n-153;
+		if (n<=214+30)
+			return n-214;
+		if (n<=244+31)
+			return n-244;
+		else{
+			int x = n%30;
+			return((x==0) ? 30 : x);}
 	}
 	
 
@@ -106,7 +136,26 @@ public class Date {
 	 * @return a month (int)
 	 */
 	private static int findCurrentMonth(int n){
-		return((int)(n-1)/30 + 4);
+		if (n<=30)
+			return 4;
+		if (n<=61)
+			return 5;
+		if (n<=61+30)
+			return 6;
+		if (n<=91+31)
+			return 7;
+		if (n<=122+31)
+			return 8;
+		if (n<=153+30)
+			return 9;
+		if (n<=183+31)
+			return 10;
+		if (n<=214+30)
+			return 11;
+		if (n<=244+31)
+			return 12;
+		else
+			return((int)(n-1)/30 + 4);
 	}
 	
 	/**
@@ -159,7 +208,7 @@ public class Date {
 		return(13+((int)((currentDay-3)/7)+1));
 	}
 	
-	public static void setCurrentDate(int day, int month){
+	public static void setCurrentDate(int number, int month){
 		currentDay=number;
 		currentDayName=findCurrentDayName(currentDay);
 		currentWeek=findCurrentWeek(currentDay);
@@ -184,6 +233,7 @@ public class Date {
 			goTomorrow();
 		
 		System.out.println(getDate());
+		
 	}
 
 }

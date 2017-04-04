@@ -53,11 +53,16 @@ public void addDish(Dish d) {
 
   public void sortShippedOrders() {
   }
-
+  
+  public void addOrder(Order order){
+	  this.shippedOrders.add(order);
+  }
+  
+  
+// visitors pattern, computation of price with discount
   public double visit(Dish d) {
 	  return d.getPrice();
   }
-
   public double visit(Meal m) {
 	  if (mealsOfTheWeek.contains(m))
 		  return m.getPrice()*specialDiscountFactor;

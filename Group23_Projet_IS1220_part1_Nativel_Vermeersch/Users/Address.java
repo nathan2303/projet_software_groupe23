@@ -1,5 +1,11 @@
 package Users;
 
+/**
+ * simple class to model a x,y position
+ * @author natha
+ *
+ */
+
 public class Address {
 	
 	private double x;
@@ -34,6 +40,10 @@ public class Address {
 
 	public void setY(double y) {
 		this.y = y;
+	}
+	
+	public double getDistanceTo(Address address){
+		return Math.sqrt(Math.pow(this.x-address.getX(),2)+Math.pow(this.y-address.getY(),2));
 	}
 	
 	

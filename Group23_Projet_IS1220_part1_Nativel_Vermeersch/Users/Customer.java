@@ -16,6 +16,8 @@ public class Customer extends User implements Observer {
 
   private String surname;
   
+  private ArrayList<Order> ordersList;
+  
   
 
 	public Customer() {
@@ -34,11 +36,27 @@ public class Customer extends User implements Observer {
 	}
 	
 	
+	
+	
 	public void order(ArrayList<Food> content, Restaurant r) {
-		Order order = new Order();
-		
+		Order order = new Order(this, r, content);
+		Courier c = order.findCourier();
+		if (c==null)
+			System.out.println("MyFoodora could not find any available courier to ship your order. Please try again later.");
+		else{
+			System.out.println("Your order has been processed. You will soon receive your meals.");
+			r.addOrder(order);
+			this.addOrder(order);
+			system.addOrder(order);
+			c.completeOrder(order);
+			//c.setPosition(this.getAddress());
+		}
 		
 	  }
+	
+	public void addOrder(Order order){
+		ordersList.add(order);
+	}
 	
 	public void registerNotifications(Restaurant r) {
 		r.registerObserver(this);
@@ -91,6 +109,10 @@ public class Customer extends User implements Observer {
 	
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 
 }

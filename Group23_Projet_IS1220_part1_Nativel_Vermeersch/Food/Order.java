@@ -3,15 +3,27 @@ package Food;
 import java.util.ArrayList;
 
 import Main.Date;
+import Main.MyFoodora;
+import Users.Courier;
 import Users.Customer;
 import Users.Restaurant;
+
+/**
+ * 
+ * @author natha
+ *
+ */
 
 public class Order {
 	
 	private Customer customer;
 	private Restaurant restaurant;
-	private ArrayList<Dish> content;
+	private ArrayList<Food> content;
 	private Date date;
+	private double price;
+	private Courier courier;
+	private MyFoodora system = MyFoodora.getInstance();
+	
 
 	public Order() {
 		
@@ -20,12 +32,117 @@ public class Order {
 	
 	
 	
-	public Order(Customer customer, Restaurant restaurant, ArrayList<Dish> content, Date date) {
+	public Order(Customer customer, Restaurant restaurant, ArrayList<Food> content) {
 		super();
 		this.customer = customer;
 		this.restaurant = restaurant;
 		this.content = content;
 		this.date = new Date();
+		this.price = computeOrderPrice(content);
+	}
+	
+	/**
+	 * computes the price of an order, taking into account discount factors of restaurant (through visitors pattern)
+	 * @param content
+	 * @return
+	 */
+	public double computeOrderPrice(ArrayList<Food> content){
+		  double res = 0;
+		  for (Food f : content)
+			  res+=f.accept(this.restaurant);
+		  return res;
+	}
+	
+	public Courier findCourier(){
+		Courier res = system.getDeliveryPolicy().findCourier(this);
+		this.courier = res;
+		return(res);
+	}
+	
+	
+
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
+
+
+	public ArrayList<Food> getContent() {
+		return content;
+	}
+
+
+
+	public void setContent(ArrayList<Food> content) {
+		this.content = content;
+	}
+
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+
+	public Courier getCourier() {
+		return courier;
+	}
+
+
+
+	public void setCourier(Courier courier) {
+		this.courier = courier;
+	}
+
+
+
+	public MyFoodora getSystem() {
+		return system;
+	}
+
+
+
+	public void setSystem(MyFoodora system) {
+		this.system = system;
 	}
 
 
