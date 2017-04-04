@@ -18,6 +18,14 @@ public class FullMeal extends Meal {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public FullMeal(String name, Starter starter, MainDish mainDish, Dessert dessert){
+		super.name=name;
+		super.dishes = new ArrayList<Dish>();
+		super.dishes.add(starter);
+		super.dishes.add(mainDish);
+		super.dishes.add(dessert);
+	}
+	
 	/** checks there are one starter, one maindish and one dessert, throws Exception if not
 	 * 
 	 * @param dishes

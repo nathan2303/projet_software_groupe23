@@ -17,6 +17,7 @@ public class HalfMeal extends Meal {
 	 * @throws InvalidHalfMealException
 	 */
 	
+	
 
 	public HalfMeal(String name, ArrayList<Dish> dishes) throws InvalidHalfMealException {
 		super(name, dishes);

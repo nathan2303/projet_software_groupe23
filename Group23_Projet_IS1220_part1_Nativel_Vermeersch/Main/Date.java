@@ -215,7 +215,13 @@ public class Date {
 		
 	}
 	
-	public static String getDate(){
+	
+	@Override
+	public String toString() {
+		return this.dayName + " " + this.day + " " + this.monthName + " 2017";
+	}
+
+	public static String getCurrentDate(){
 		return currentDayName + " " + currentDay + " " + currentMonthName + " 2017";
 	}
 	
@@ -227,12 +233,12 @@ public class Date {
 
 		System.out.println(findCurrentWeek(10));
 		
-		System.out.println(getDate());
+		System.out.println(getCurrentDate());
 		
 		for (int i=0;i<40;i++)
 			goTomorrow();
 		
-		System.out.println(getDate());
+		System.out.println(getCurrentDate());
 		
 	}
 

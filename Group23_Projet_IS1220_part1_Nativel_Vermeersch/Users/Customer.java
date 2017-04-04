@@ -16,7 +16,7 @@ public class Customer extends User implements Observer {
 
   private String surname;
   
-  private ArrayList<Order> ordersList;
+  private ArrayList<Order> ordersList = new ArrayList<Order>();
   
   
 
@@ -111,6 +111,16 @@ public class Customer extends User implements Observer {
 		this.surname = surname;
 	}
 	
+	
+	
+	public ArrayList<Order> getOrdersList() {
+		return ordersList;
+	}
+
+	public void setOrdersList(ArrayList<Order> ordersList) {
+		this.ordersList = ordersList;
+	}
+
 	public static void main(String[] args) {
 		
 	}

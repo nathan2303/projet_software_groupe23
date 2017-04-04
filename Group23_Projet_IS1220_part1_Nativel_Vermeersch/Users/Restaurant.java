@@ -61,11 +61,13 @@ public void addDish(Dish d) {
   
 // visitors pattern, computation of price with discount
   public double visit(Dish d) {
+	  System.out.println("coucou2");
 	  return d.getPrice();
   }
   public double visit(Meal m) {
 	  if (mealsOfTheWeek.contains(m))
 		  return m.getPrice()*specialDiscountFactor;
+	  System.out.println("coucou1");
 	  return m.getPrice()*genericDiscountFactor;
   }
   

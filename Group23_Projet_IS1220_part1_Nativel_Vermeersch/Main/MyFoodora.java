@@ -6,6 +6,7 @@ import Policies.DeliveryPolicy;
 import Policies.FastestDelivery;
 import Policies.ProfitPolicy;
 import Policies.TargetProfit_DeliveryCost;
+import Users.Address;
 import Users.Courier;
 import Users.Customer;
 import Users.Manager;
@@ -29,7 +30,7 @@ public class MyFoodora {
   public ArrayList<Courier> onDutyCouriersList = new ArrayList<Courier>();
   public ArrayList<Manager> managersList = new ArrayList<Manager>();
   public ArrayList<Order> completedOrders = new ArrayList<Order>();
-  public DeliveryPolicy deliveryPolicy = new FastestDelivery();
+  public DeliveryPolicy deliveryPolicy;
   public ProfitPolicy profitPolicy = new TargetProfit_DeliveryCost();
   public static MyFoodora instance = null;
   
@@ -191,6 +192,14 @@ public class MyFoodora {
 	}
 	
 	
+	
+	public static void main(String[] args) {
+		MyFoodora system = MyFoodora.getInstance();
+		Customer c1 = new Customer("Nathan", "Vermeersch", "nver", "1234", new Address(0, 0), "nv@gmail.com", "0000");
+		system.addUser(c1);
+		System.out.println(system.getActivatedUsersList());
+
+	}
   
   
 

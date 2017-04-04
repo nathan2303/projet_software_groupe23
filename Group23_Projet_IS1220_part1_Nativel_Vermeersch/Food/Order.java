@@ -48,6 +48,7 @@ public class Order {
 	 */
 	public double computeOrderPrice(ArrayList<Food> content){
 		  double res = 0;
+		  System.out.println("coucou3");
 		  for (Food f : content)
 			  res+=f.accept(this.restaurant);
 		  return res;
@@ -148,7 +149,7 @@ public class Order {
 
 
 	public static void main(String[] args) {
-		System.out.println(Date.getDate());
+		System.out.println(Date.getCurrentDate());
 	}
 
 }
