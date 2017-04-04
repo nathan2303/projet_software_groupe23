@@ -22,7 +22,7 @@ public class HalfMeal extends Meal {
 	public HalfMeal(String name, ArrayList<Dish> dishes) throws InvalidHalfMealException {
 		super(name, dishes);
 		checkHalfMeal(dishes);
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	public HalfMeal() {

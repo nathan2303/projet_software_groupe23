@@ -24,7 +24,6 @@ public class Test {
 	public static void main(String[] args) {
 		MyFoodora system = MyFoodora.getInstance();
 		system.setDeliveryPolicy(new FastestDelivery());
-		system.addUser(new Courier("larbin","lar","AZERTY",new Address(6000,3000),"0000"));
 		Starter s1 = new Starter(5, "saumon fumé", DishType.Standard);
 		MainDish md1 = new MainDish(10, "pizza végétarienne", DishType.Vegetarian);
 		Dessert d1 = new Dessert(6, "tiramisu", DishType.Vegetarian);

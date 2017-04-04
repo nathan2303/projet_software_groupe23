@@ -64,11 +64,13 @@ public void addDish(Dish d) {
 	  System.out.println("coucou2");
 	  return d.getPrice();
   }
+  
+  //ne fonctionne pas
   public double visit(Meal m) {
 	  if (mealsOfTheWeek.contains(m))
-		  return m.getPrice()*specialDiscountFactor;
+		  return m.getPrice()*(1-specialDiscountFactor);
 	  System.out.println("coucou1");
-	  return m.getPrice()*genericDiscountFactor;
+	  return m.getPrice()*(1-genericDiscountFactor);
   }
   
   public void registerObserver(Observer o){
