@@ -17,16 +17,21 @@ public class Manager extends User {
 	}
 	
 	public void addUser(User u){
+		system.addUser(u);
 	  }
 	
 	public void removeUser(User u) {
+		system.removeUser(u);
 	  }
 	
 	public void activateUser(User u) {
+		system.activateUser(u);
 	  }
 	
 	public void deactivateUser(User u) {
+		system.deactivateUser(u);
 	  }
+	
 	
 	public double computeProfit() {
 	  return 0.0;
@@ -41,6 +46,7 @@ public class Manager extends User {
 	  }
 	
 	public void setDeliveryPolicy(DeliveryPolicy dp) {
+		system.setDeliveryPolicy(dp);
 	  }
 	
 	public String getName() {

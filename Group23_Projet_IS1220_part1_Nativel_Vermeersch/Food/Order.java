@@ -34,10 +34,12 @@ public class Order {
 	
 	public Order(Customer customer, Restaurant restaurant, ArrayList<Food> content) {
 		super();
+		System.out.println("order created");
 		this.customer = customer;
 		this.restaurant = restaurant;
 		this.content = content;
 		this.date = new Date();
+		System.out.println("computed price = "+ computeOrderPrice(content));
 		this.price = computeOrderPrice(content);
 	}
 	
@@ -49,8 +51,12 @@ public class Order {
 	public double computeOrderPrice(ArrayList<Food> content){
 		  double res = 0;
 		  System.out.println("coucou3");
-		  for (Food f : content)
+		  System.out.println("");
+		  for (Food f : content){
+			  System.out.println("f"+f);
+			  System.out.println(f.accept(this.restaurant));
 			  res+=f.accept(this.restaurant);
+			  }
 		  return res;
 	}
 	

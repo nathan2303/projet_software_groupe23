@@ -74,8 +74,11 @@ public abstract class Meal extends Food {
    */
   protected double computeMealPrice(ArrayList<Dish> dishes){
 	  double res = 0;
-	  for (Dish d : dishes)
+	  for (Dish d : dishes){
+		  System.out.println("loop for in computeMealPrice");
+		  System.out.println("res= "+res);
 		  res+=d.getPrice();
+	  }
 	  return res;
   }
   

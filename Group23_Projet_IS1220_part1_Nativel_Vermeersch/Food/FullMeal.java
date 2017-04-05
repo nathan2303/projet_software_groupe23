@@ -24,6 +24,8 @@ public class FullMeal extends Meal {
 		super.dishes.add(starter);
 		super.dishes.add(mainDish);
 		super.dishes.add(dessert);
+		super.price = computeMealPrice(this.dishes);
+		this.mealType = findMealType(this.dishes);
 	}
 	
 	/** checks there are one starter, one maindish and one dessert, throws Exception if not

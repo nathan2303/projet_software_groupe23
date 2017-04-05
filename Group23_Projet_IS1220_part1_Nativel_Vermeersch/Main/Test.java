@@ -23,15 +23,15 @@ public class Test {
 	
 	public static void main(String[] args) {
 		MyFoodora system = MyFoodora.getInstance();
+		Courier c = new Courier("larbin","larb","AZERTY",new Address(3,2),"000");
+		system.addUser(c);
 		system.setDeliveryPolicy(new FastestDelivery());
 		Starter s1 = new Starter(5, "saumon fumé", DishType.Standard);
 		MainDish md1 = new MainDish(10, "pizza végétarienne", DishType.Vegetarian);
 		Dessert d1 = new Dessert(6, "tiramisu", DishType.Vegetarian);
 		Meal m1 = new FullMeal("menu classique", s1, md1, d1);
 		ArrayList<Food> list = new ArrayList<>();
-		list.add(s1);
-		list.add(md1);
-		list.add(d1);
+		list.add(m1);
 		
 		Customer c1 = new Customer("Nathan", "Vermeersch", "nver", "1234", new Address(0, 0), "nv@gmail.com", "0000");
 		

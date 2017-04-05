@@ -40,15 +40,19 @@ public class Restaurant extends User implements Visitor, Observable {
 }
 
 public void addDish(Dish d) {
+	this.dishes.add(d);
   }
 
   public void removeDish(Dish d) {
+	  this.dishes.remove(d);
   }
 
-  public void createMeal() {
+  public void addMeal(Meal m) {
+	  this.meals.add(m);	  
   }
 
-  public void removeMeal() {
+  public void removeMeal(Meal m) {
+	  this.meals.add(m);
   }
 
   public void sortShippedOrders() {
@@ -65,11 +69,15 @@ public void addDish(Dish d) {
 	  return d.getPrice();
   }
   
-  //ne fonctionne pas
+  /**
+   * visitor pattern
+   * @param m the meal
+   * @return price of the meal with discount
+   */
   public double visit(Meal m) {
 	  if (mealsOfTheWeek.contains(m))
 		  return m.getPrice()*(1-specialDiscountFactor);
-	  System.out.println("coucou1");
+	  System.out.println("price of "+ m + " equal to " + m.getPrice());
 	  return m.getPrice()*(1-genericDiscountFactor);
   }
   

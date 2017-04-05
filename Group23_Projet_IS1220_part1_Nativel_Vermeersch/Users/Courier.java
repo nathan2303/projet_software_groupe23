@@ -154,6 +154,7 @@ public static void main(String[] args) {
 	c.addDeliveredOrders(order1);
 	c.addDeliveredOrders(order2);
 	System.out.println(c.getDeliveredOrders());
+	System.out.println(c.position);
 }
 
 
