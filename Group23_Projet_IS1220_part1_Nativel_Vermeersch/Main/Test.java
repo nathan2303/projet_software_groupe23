@@ -38,7 +38,7 @@ public class Test {
 		Restaurant r1 = new Restaurant("Chez Charbel", "charb", "0000", new Address(4000,5000));
 		c1.order(list, r1);
 		System.out.println(c1.getOrdersList());
-		System.out.println(c1.getOrdersList().get(0).getPrice());
+		System.out.println(((Meal)r1.getShippedOrders().get(0).getContent().get(0)).getDishes().get(0).getName());
 		System.out.println(c1.getOrdersList().get(0).getDate().toString());
 		
 	}

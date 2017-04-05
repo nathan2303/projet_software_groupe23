@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.io.IOException;
 
 public class Password {
+	
+	private Date date;
     
     public static void main (String args[]) throws IOException {
 

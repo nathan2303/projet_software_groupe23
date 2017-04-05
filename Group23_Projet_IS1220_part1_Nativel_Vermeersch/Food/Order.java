@@ -21,6 +21,7 @@ public class Order {
 	private ArrayList<Food> content;
 	private Date date;
 	private double price;
+	private double profit;
 	private Courier courier;
 	private MyFoodora system = MyFoodora.getInstance();
 	
@@ -39,8 +40,8 @@ public class Order {
 		this.restaurant = restaurant;
 		this.content = content;
 		this.date = new Date();
-		System.out.println("computed price = "+ computeOrderPrice(content));
 		this.price = computeOrderPrice(content);
+		this.profit = this.price*system.getMarkupPercentage()+system.getServiceFee()-system.getDeliveryCost();
 	}
 	
 	/**
