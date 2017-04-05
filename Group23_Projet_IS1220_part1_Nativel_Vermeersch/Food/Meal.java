@@ -28,7 +28,25 @@ public abstract class Meal extends Food {
 	  this.mealType = findMealType(this.dishes);
   }
   
-  /**
+  
+  
+  public ArrayList<Dish> getDishes() {
+	return dishes;
+}
+
+public void setDishes(ArrayList<Dish> dishes) {
+	this.dishes = dishes;
+}
+
+public DishType getMealType() {
+	return mealType;
+}
+
+public void setMealType(DishType mealType) {
+	this.mealType = mealType;
+}
+
+/**
    * finds the type of the meal: to be vegetarian, all dishes of a meal must be vegetarian, etc.
    * if no common specificity returns standard
    * @param dishes

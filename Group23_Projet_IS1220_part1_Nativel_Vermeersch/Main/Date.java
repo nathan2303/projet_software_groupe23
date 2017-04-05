@@ -9,7 +9,7 @@ import java.util.HashMap;
  *
  */
 
-public class Date {
+public class Date implements Comparable<Date> {
 	
 	private int day;
 	private int week;
@@ -17,6 +17,7 @@ public class Date {
 	private String dayName;
 	private String monthName;
 	private int year;
+	private int nonStaticCounter;
 	private static int counter = 1;
 	private static int currentDay=1;
 	private static String currentDayName="Saturday";
@@ -30,6 +31,7 @@ public class Date {
 	/**
 	 * instance of date, which is used for history purposes
 	 * one must not confuse day and currentDay (static), etc.
+	 * without arguments, the Date is the current Date at the moment you construct the instance
 	 */
 	public Date() {
 		this.day=currentDay;
@@ -37,9 +39,19 @@ public class Date {
 		this.dayName=currentDayName;
 		this.month=currentMonth;
 		this.monthName=currentMonthName;
+		this.nonStaticCounter=counter;
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public Date(int day, int month){
+		this.day=day;
+		this.month=month;
+		this.nonStaticCounter=findCounter(day, month);
+		this.dayName=findCurrentDayName(nonStaticCounter);
+		this.monthName=findCurrentMonthName(nonStaticCounter);
+		this.week=findCurrentWeek(nonStaticCounter);
+	}
 	/**
 	 * the static attributes go one day further
 	 */
@@ -65,7 +77,118 @@ public class Date {
 		currentMonthName=findCurrentMonthName(currentMonth);
 	}
 	
+	public int findCounter(int day, int month){
+		switch (month){
+		case 4 :
+			return(day);
+		case 5 :
+			return(30+day);
+		case 6 :
+			return(61+day);
+		case 7 :
+			return(61+30+day);
+		case 8 :
+			return(91+31+day);
+		case 9 :
+			return(122+31+day);
+		case 10 :
+			return(153+30+day);
+		case 11 :
+			return(183+31+day);
+		case 12 :
+			return(214+30+day);
+		}
+		return(0);
+	}
 	
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getWeek() {
+		return week;
+	}
+
+	public void setWeek(int week) {
+		this.week = week;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public String getDayName() {
+		return dayName;
+	}
+
+	public void setDayName(String dayName) {
+		this.dayName = dayName;
+	}
+
+	public String getMonthName() {
+		return monthName;
+	}
+
+	public void setMonthName(String monthName) {
+		this.monthName = monthName;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		Date.counter = counter;
+	}
+
+	public static int getCurrentMonth() {
+		return currentMonth;
+	}
+
+	public static void setCurrentMonth(int currentMonth) {
+		Date.currentMonth = currentMonth;
+	}
+
+	public static String getCurrentMonthName() {
+		return currentMonthName;
+	}
+
+	public static void setCurrentMonthName(String currentMonthName) {
+		Date.currentMonthName = currentMonthName;
+	}
+
+	public static int getCurrentYear() {
+		return currentYear;
+	}
+
+	public static void setCurrentYear(int currentYear) {
+		Date.currentYear = currentYear;
+	}
+
+	public int getNonStaticCounter() {
+		return nonStaticCounter;
+	}
+
+	public void setNonStaticCounter(int nonStaticCounter) {
+		this.nonStaticCounter = nonStaticCounter;
+	}
+
 	public static int getCurrentDay() {
 		return currentDay;
 	}
@@ -240,6 +363,12 @@ public class Date {
 		
 		System.out.println(getCurrentDate());
 		
+	}
+	
+	public int compareTo(Date date){
+		int compareQuantity = date.getNonStaticCounter();
+		
+		return this.nonStaticCounter - compareQuantity;
 	}
 
 }

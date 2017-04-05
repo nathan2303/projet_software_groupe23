@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 import Food.Order;
 import Policies.DeliveryPolicy;
-import Policies.FastestDelivery;
 import Policies.ProfitPolicy;
 import Policies.TargetProfit_DeliveryCost;
 import Users.Address;
@@ -22,6 +21,7 @@ public class MyFoodora {
 
   public double markupPercentage = 0.05;
   public double serviceFee = 5;
+  public double deliveryCost = 7;
   public ArrayList<User> usersList = new ArrayList<User>();
   public ArrayList<User> activatedUsersList = new ArrayList<User>();
   public ArrayList<Restaurant> restaurantsList = new ArrayList<Restaurant>();
@@ -86,6 +86,86 @@ public class MyFoodora {
 	  this.completedOrders.add(order);
   }
   
+  /**
+   * computes the income (ie cumulated price of orders)
+   * @param start the date of start
+   * @param end the date of end
+   * @return order_price, not profit!
+   */
+  public double computeIncome(Date start, Date end){
+	  double res = 0;
+	  for (Order o : this.completedOrders){
+		  if (o.getDate().compareTo(start)>=0 && o.getDate().compareTo(end)<=0)
+			  res+=o.getPrice();
+	  }
+	  return res;
+  }
+  
+  
+  /**
+   * computes the income over a time period divided by the customers who ordered something during this time period
+   * @param start
+   * @param end
+   * @return
+   */
+    public double computeIncomePerCustomer(Date start, Date end){
+	  double res = 0;
+	  ArrayList<Customer> list = new ArrayList<>();
+	  for (Order o : this.completedOrders){
+		  if (o.getDate().compareTo(start)>=0 && o.getDate().compareTo(end)<=0){
+			  res+=o.getPrice();
+			  Customer c = o.getCustomer();
+			  if (!list.contains(c))
+				  list.add(c);
+		  }
+	  }
+	  return res/list.size();
+  }
+  
+  public double computeTotalIncomePerCustomer(){
+	  double res = 0;
+	  ArrayList<Customer> list = new ArrayList<>();
+	  for (Order o : this.completedOrders){
+		  res+=o.getPrice();
+		  Customer c = o.getCustomer();
+		  if (!list.contains(c))
+			  list.add(c);
+	  }
+	  return res/list.size();
+  }
+  
+  public double computeTotalIncome(){
+	  double res = 0;
+	  for (Order o : this.completedOrders){
+		  res+=o.getPrice();
+	  }
+	  return res;
+  }
+  
+  /**
+   * computes the profit for a period of time, according to the followinf formula:
+   * profit = order_price * markup + service_fee - delivery_cost
+   * @param start
+   * @param end
+   * @return
+   */
+  public double computeProfit(Date start, Date end){
+	  double res = 0;
+	  for (Order o : this.completedOrders){
+		  if (o.getDate().compareTo(start)>=0 && o.getDate().compareTo(end)<=0)
+			  res+=o.getPrice()*this.markupPercentage+this.serviceFee-this.deliveryCost;
+	  }
+	  return res;
+  }
+  
+  public double computeTotalProfit(){
+	  double res = 0;
+	  for (Order o : this.completedOrders){
+		  res+=o.getPrice()*this.markupPercentage+this.serviceFee-this.deliveryCost;
+	  }
+	  return res;
+  }
+  
   private MyFoodora(){
   }
   
@@ -133,6 +213,10 @@ public class MyFoodora {
 	
 	public void setProfitPolicy(ProfitPolicy profitPolicy) {
 		this.profitPolicy = profitPolicy;
+		ArrayList<Double> list = this.profitPolicy.computeProfitFigures();
+		this.markupPercentage = list.get(0);
+		this.serviceFee = list.get(1);
+		this.deliveryCost = list.get(2);
 	}
 
 	public ArrayList<User> getUsersList() {
@@ -193,6 +277,14 @@ public class MyFoodora {
 	
 	
 	
+	public double getDeliveryCost() {
+		return deliveryCost;
+	}
+
+	public void setDeliveryCost(double deliveryCost) {
+		this.deliveryCost = deliveryCost;
+	}
+
 	public static void main(String[] args) {
 		MyFoodora system = MyFoodora.getInstance();
 		Customer c1 = new Customer("Nathan", "Vermeersch", "nver", "1234", new Address(0, 0), "nv@gmail.com", "0000");

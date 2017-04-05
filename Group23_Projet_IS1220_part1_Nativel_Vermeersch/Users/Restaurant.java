@@ -25,7 +25,6 @@ public class Restaurant extends User implements Visitor, Observable {
   
   private ArrayList<Observer> registeredCustomersForNotifications = new ArrayList<Observer>();
   
-  
   public Restaurant(){
 	  super();
   }
@@ -65,7 +64,6 @@ public void addDish(Dish d) {
   
 // visitors pattern, computation of price with discount
   public double visit(Dish d) {
-	  System.out.println("coucou2");
 	  return d.getPrice();
   }
   
@@ -77,17 +75,18 @@ public void addDish(Dish d) {
   public double visit(Meal m) {
 	  if (mealsOfTheWeek.contains(m))
 		  return m.getPrice()*(1-specialDiscountFactor);
-	  System.out.println("price of "+ m + " equal to " + m.getPrice());
 	  return m.getPrice()*(1-genericDiscountFactor);
   }
   
   public void registerObserver(Observer o){
-	  registeredCustomersForNotifications.add(o);
+	  if (!registeredCustomersForNotifications.contains(o))
+		  registeredCustomersForNotifications.add(o);
 	  
   }
   
   public void removeObserver(Observer o){
-	  registeredCustomersForNotifications.remove(o);
+	  if (registeredCustomersForNotifications.contains(o))
+		  registeredCustomersForNotifications.remove(o);
 	  
   }
   
