@@ -32,10 +32,12 @@ public class Test {
 		Meal m1 = new FullMeal("menu classique", s1, md1, d1);
 		ArrayList<Food> list = new ArrayList<>();
 		list.add(m1);
+
 		
 		Customer c1 = new Customer("Nathan", "Vermeersch", "nver", "1234", new Address(0, 0), "nv@gmail.com", "0000");
 		
 		Restaurant r1 = new Restaurant("Chez Charbel", "charb", "0000", new Address(4000,5000));
+		System.out.println(md1.accept(r1));
 		c1.order(list, r1);
 		System.out.println(c1.getOrdersList());
 		System.out.println(((Meal)r1.getShippedOrders().get(0).getContent().get(0)).getDishes().get(0).getName());

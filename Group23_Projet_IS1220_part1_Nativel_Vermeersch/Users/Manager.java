@@ -48,6 +48,10 @@ public class Manager extends User {
 		system.setDeliveryPolicy(dp);
 	  }
 	
+	/**
+	 * changes the attribute in MyFoodora but also updates profit figures (markup, etc)
+	 * @param pp ProfitPolicy
+	 */
 	public void setProfitPolicy(ProfitPolicy pp) {
 		system.setProfitPolicy(pp);
 	  }

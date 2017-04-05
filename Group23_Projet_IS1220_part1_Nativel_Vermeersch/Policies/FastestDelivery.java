@@ -11,18 +11,10 @@ public class FastestDelivery implements DeliveryPolicy {
 	
 	private MyFoodora system = MyFoodora.getInstance();
 	
-	
-	
-	
-
 	public FastestDelivery() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-
 
 	/**
 	 * finds a courier according to fastest delivery policy 

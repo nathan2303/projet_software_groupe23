@@ -1,9 +1,12 @@
 package Users;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import Food.Dish;
+import Food.Food;
 import Food.Meal;
 import Food.Order;
-import java.util.ArrayList;
-import Users.Observable;
+import Policies.ShippedOrderSortingPolicy;
 
 public class Restaurant extends User implements Visitor, Observable {
 
@@ -97,7 +100,10 @@ public void addDish(Dish d) {
 	  
   }
   
-  
+  	public TreeMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
+  		return sosp.sortOrders(this.shippedOrders);
+  		
+  	}
 	public Address getAddress() {
 		return address;
 	}

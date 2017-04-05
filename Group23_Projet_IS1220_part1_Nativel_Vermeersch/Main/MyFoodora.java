@@ -1,10 +1,10 @@
 package Main;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Food.Order;
 import Policies.DeliveryPolicy;
 import Policies.ProfitPolicy;
-import Policies.TargetProfit_DeliveryCost;
 import Users.Address;
 import Users.Courier;
 import Users.Customer;
@@ -22,16 +22,16 @@ public class MyFoodora {
   public double markupPercentage = 0.05;
   public double serviceFee = 5;
   public double deliveryCost = 7;
-  public ArrayList<User> usersList = new ArrayList<User>();
-  public ArrayList<User> activatedUsersList = new ArrayList<User>();
-  public ArrayList<Restaurant> restaurantsList = new ArrayList<Restaurant>();
-  public ArrayList<Customer> customersList = new ArrayList<Customer>();
-  public ArrayList<Courier> couriersList = new ArrayList<Courier>();
+  public HashMap<String, User> usersList = new HashMap<String, User>();
+  public HashMap<String, User> activatedUsersList = new HashMap<String, User>();
+  public HashMap<String, Restaurant> restaurantsList = new HashMap<String, Restaurant>();
+  public HashMap<String, Customer> customersList = new HashMap<String, Customer>();
+  public HashMap<String, Courier> couriersList = new HashMap<String, Courier>();
   public ArrayList<Courier> onDutyCouriersList = new ArrayList<Courier>();
-  public ArrayList<Manager> managersList = new ArrayList<Manager>();
+  public HashMap<String,Manager> managersList = new HashMap<String,Manager>();
   public ArrayList<Order> completedOrders = new ArrayList<Order>();
   public DeliveryPolicy deliveryPolicy;
-  public ProfitPolicy profitPolicy = new TargetProfit_DeliveryCost();
+  public ProfitPolicy profitPolicy;
   public static MyFoodora instance = null;
   
   
@@ -40,18 +40,18 @@ public class MyFoodora {
    * @param u the user to be added
    */
   public void addUser(User u){
-	  usersList.add(u);
+	  usersList.put(u.getUsername(),u);
 	  activateUser(u);
 	  if (u instanceof Courier){
-		  couriersList.add((Courier)u);
+		  couriersList.put(u.getUsername(),(Courier)u);
 		  onDutyCouriersList.add((Courier)u);
 	  }
 	  if (u instanceof Restaurant)
-		  restaurantsList.add((Restaurant)u);
+		  restaurantsList.put(u.getUsername(),(Restaurant)u);
 	  if (u instanceof Customer)
-		  customersList.add((Customer)u);
+		  customersList.put(u.getUsername(),(Customer)u);
 	  if (u instanceof Manager)
-		  managersList.add((Manager)u);
+		  managersList.put(u.getUsername(),(Manager)u);
   }
   
   /**
@@ -75,11 +75,11 @@ public class MyFoodora {
   }
   
   public void activateUser(User u){
-	  activatedUsersList.add(u);
+	  activatedUsersList.put(u.getUsername(),u);
   }
   
   public void deactivateUser(User u){
-	  activatedUsersList.remove(u);
+	  activatedUsersList.remove(u.getUsername());
   }
   
   public void addOrder(Order order){
@@ -134,11 +134,21 @@ public class MyFoodora {
 	  return res/list.size();
   }
   
+  /**
+   * computes the total income, ie the sum of the prices of all the orders ever completed
+   * @return
+   */
   public double computeTotalIncome(){
 	  double res = 0;
 	  for (Order o : this.completedOrders){
 		  res+=o.getPrice();
 	  }
+	  return res;
+  }
+  
+  public double computeLastMonthIncome(){
+	  int currentMonth = Date.getCurrentMonth();
+	  double res = this.computeIncome(new Date(1,currentMonth-1), new Date(30, currentMonth-1));
 	  return res;
   }
   
@@ -213,10 +223,10 @@ public class MyFoodora {
 	
 	public void setProfitPolicy(ProfitPolicy profitPolicy) {
 		this.profitPolicy = profitPolicy;
-		ArrayList<Double> list = this.profitPolicy.computeProfitFigures();
-		this.markupPercentage = list.get(0);
-		this.serviceFee = list.get(1);
-		this.deliveryCost = list.get(2);
+		double[] list = this.profitPolicy.computeProfitFigures();
+		this.markupPercentage = list[0];
+		this.serviceFee = list[1];
+		this.deliveryCost = list[2];
 	}
 
 	public ArrayList<User> getUsersList() {

@@ -14,7 +14,7 @@ public class MealTest extends TestCase {
 		assertTrue(m1.name == "menu classique");
 		System.out.println(m1.dishes);
 		ArrayList<Dish> menutest = new ArrayList<Dish>();
-		assertTrue(True);
+		assertTrue(true);
 		
 		
 	}
