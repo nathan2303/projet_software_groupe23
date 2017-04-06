@@ -6,7 +6,10 @@ import junit.framework.TestCase;
 import Users.User;
 public class CourierTest extends TestCase {
 
-
+/**
+ * je teste d'abord si l'addresse du coursier change bien pour l'addresse du client losqu'il complète une client
+ * puis je regarde si le system inscrit bien les coursier dans la lis is on duty
+ */
 
 	public void testCompleteOrder() {
 		Order o = new Order();

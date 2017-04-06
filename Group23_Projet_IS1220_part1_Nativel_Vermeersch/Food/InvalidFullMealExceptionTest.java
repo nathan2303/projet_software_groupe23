@@ -21,8 +21,9 @@ public class InvalidFullMealExceptionTest extends TestCase {
 		
 		try {FullMeal meal = new FullMeal("menu1", dishes);}
 		catch (InvalidFullMealException e) {
-			boolean True = true;
-			assertTrue(True);
+			
+			
+			assertTrue(e.getMessage().contains("A full meal must contain a starter, a main-dish and a dessert."));
 		}
 	}
 

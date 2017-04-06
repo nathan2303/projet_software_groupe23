@@ -54,6 +54,7 @@ public class Customer extends User implements Observer {
 		
 	  }
 	
+	
 	public void addOrder(Order order){
 		ordersList.add(order);
 	}
