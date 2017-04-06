@@ -20,6 +20,7 @@ public class MainTest {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		MyFoodora system = MyFoodora.getInstance();
+		ConfigInitiale.launch();
 		boolean running = true;
 		System.out.println("Welcome to MyFoodora!");
 		while (running){
