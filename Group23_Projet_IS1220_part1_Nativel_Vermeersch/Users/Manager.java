@@ -1,5 +1,6 @@
 package Users;
 import Main.Date;
+import Main.MyFoodora;
 import Policies.DeliveryPolicy;
 import Policies.ProfitPolicy;
 
@@ -71,5 +72,24 @@ public class Manager extends User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
+	public void determineMostLessSellingRestaurant(){
+		String mostRes;
+		String lessRes;
+		double mostSell = 0.0;
+		double lessSell = system.computeTotalIncome();  // je prends cette valeur initiale car un restaurant ne peut pas vendre plus que le revenu total du système
+		for (String mapKey : system.restaurantsList.keySet()){
+			if ( system.restaurantsList.get(mapKey).getTotalProfit() > mostSell)
+			{
+				mostSell = system.restaurantsList.get(mapKey).getTotalProfit();
+				mostRes = mapKey;
+			}
+			if ( system.restaurantsList.get(mapKey).getTotalProfit() < lessSell){
+				lessSell = system.restaurantsList.get(mapKey).getTotalProfit();
+				lessRes = mapKey;
+			}
+					
+				}
+		}
 
 }

@@ -121,6 +121,29 @@ public class MyFoodora {
 	  }
 	  return res/list.size();
   }
+
+    /**
+     * returns a double[2] with the income per customer and the number of customers who ordered something over the time period
+     * @param start
+     * @param end
+     * @return
+     */
+    public double[] computeIncomePerCustomerBis(Date start, Date end){
+	  double res = 0;
+	  double[] res2=new double[2];
+	  ArrayList<Customer> list = new ArrayList<>();
+	  for (Order o : this.completedOrders){
+		  if (o.getDate().compareTo(start)>=0 && o.getDate().compareTo(end)<=0){
+			  res+=o.getPrice();
+			  Customer c = o.getCustomer();
+			  if (!list.contains(c))
+				  list.add(c);
+		  }
+	  }
+	  res2[0]=res;
+	  res2[1]=list.size();
+	  return res2;
+  }
   
   public double computeTotalIncomePerCustomer(){
 	  double res = 0;
@@ -229,43 +252,46 @@ public class MyFoodora {
 		this.deliveryCost = list[2];
 	}
 
-	public ArrayList<User> getUsersList() {
+
+	
+	
+	public HashMap<String, User> getUsersList() {
 		return usersList;
 	}
 
-	public void setUsersList(ArrayList<User> usersList) {
+	public void setUsersList(HashMap<String, User> usersList) {
 		this.usersList = usersList;
 	}
 
-	public ArrayList<User> getActivatedUsersList() {
+	public HashMap<String, User> getActivatedUsersList() {
 		return activatedUsersList;
 	}
 
-	public void setActivatedUsersList(ArrayList<User> activatedUsersList) {
+	public void setActivatedUsersList(HashMap<String, User> activatedUsersList) {
 		this.activatedUsersList = activatedUsersList;
 	}
 
-	public ArrayList<Restaurant> getRestaurantsList() {
+	public HashMap<String, Restaurant> getRestaurantsList() {
 		return restaurantsList;
 	}
 
-	public void setRestaurantsList(ArrayList<Restaurant> restaurantsList) {
+	public void setRestaurantsList(HashMap<String, Restaurant> restaurantsList) {
 		this.restaurantsList = restaurantsList;
 	}
 
-	public ArrayList<Customer> getCustomersList() {
+	public HashMap<String, Customer> getCustomersList() {
 		return customersList;
 	}
 
-	public void setCustomersList(ArrayList<Customer> customersList) {
+	public void setCustomersList(HashMap<String, Customer> customersList) {
 		this.customersList = customersList;
 	}
 
-	public ArrayList<Courier> getCouriersList() {
+	public HashMap<String, Courier> getCouriersList() {
 		return couriersList;
 	}
 
-	public void setCouriersList(ArrayList<Courier> couriersList) {
+	public void setCouriersList(HashMap<String, Courier> couriersList) {
 		this.couriersList = couriersList;
 	}
 
@@ -277,16 +303,14 @@ public class MyFoodora {
 		this.onDutyCouriersList = onDutyCouriersList;
 	}
 
-	public ArrayList<Manager> getManagersList() {
+	public HashMap<String, Manager> getManagersList() {
 		return managersList;
 	}
 
-	public void setManagersList(ArrayList<Manager> managersList) {
+	public void setManagersList(HashMap<String, Manager> managersList) {
 		this.managersList = managersList;
 	}
-	
-	
-	
+
 	public double getDeliveryCost() {
 		return deliveryCost;
 	}

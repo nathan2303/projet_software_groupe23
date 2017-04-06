@@ -67,13 +67,13 @@ public class Customer extends User implements Observer {
 	  }
 	
 	public void registerAllNotifications(){
-		ArrayList<Restaurant> list = system.getRestaurantsList();
+		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
 		for (Restaurant r : list)
 			this.registerNotifications(r);
 	}
 	
 	public void unregisterAllNotifications(){
-		ArrayList<Restaurant> list = system.getRestaurantsList();
+		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
 		for (Restaurant r : list)
 			this.unregisterNotifications(r);
 	}

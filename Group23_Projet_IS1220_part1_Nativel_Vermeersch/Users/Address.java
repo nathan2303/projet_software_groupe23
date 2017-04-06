@@ -46,6 +46,12 @@ public class Address {
 		return Math.sqrt(Math.pow(this.x-address.getX(),2)+Math.pow(this.y-address.getY(),2));
 	}
 	
+
+	public boolean equals(Address a){
+		return(this.getX() == a.getX() && this.getY() == a.getY());
+		
+	}
+	
 	
 	
 	

@@ -28,6 +28,8 @@ public class Restaurant extends User implements Visitor, Observable {
   
   private ArrayList<Observer> registeredCustomersForNotifications = new ArrayList<Observer>();
   
+  private double totalProfit;
+  
   public Restaurant(){
 	  super();
   }
@@ -38,6 +40,8 @@ public class Restaurant extends User implements Visitor, Observable {
 	super(username, password);
 	this.name = name;
 	this.address = address;
+	this.totalProfit = 0.0;
+	
 	// TODO Auto-generated constructor stub
 }
 
@@ -62,6 +66,7 @@ public void addDish(Dish d) {
   
   public void addOrder(Order order){
 	  this.shippedOrders.add(order);
+	  this.totalProfit += order.getPrice();
   }
   
   
@@ -178,5 +183,9 @@ public static void main(String[] args) {
 	  System.out.println(r1.id);
 	  System.out.println(r2.id);
 }
+public double getTotalProfit(){
+	return this.totalProfit;
+}
+
 
 }

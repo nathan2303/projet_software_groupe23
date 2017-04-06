@@ -5,7 +5,13 @@ import junit.framework.TestCase;
 public class DateTest extends TestCase {
 
 	public void testGoTomorrow() {
-		fail("Not yet implemented");
+		Date date = new Date();
+		int a = date.getNonStaticCounter();
+		date.goTomorrow();
+		
+		
+				
+		assertTrue(a + 1 == date.getNonStaticCounter());
 	}
 
 	public void testAdvanceInTime() {
