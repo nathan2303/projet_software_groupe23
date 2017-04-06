@@ -23,10 +23,13 @@ public class Courier extends User {
 	// TODO Auto-generated constructor stub
 }
 
-	public Courier(String name, String username, String password, Address position, String phoneNumber) {
+	public Courier(String name, String surname,String username, String password, Address position, String phoneNumber) {
 		super(username, password);
 		this.phoneNumber = phoneNumber;
 		this.position = position;
+		this.isOnDuty=true;
+		this.name = name;
+		this.surname = surname;
 		
 		// TODO Auto-generated constructor stub
 	}

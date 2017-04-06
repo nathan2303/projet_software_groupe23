@@ -146,6 +146,7 @@ public void addDish(Dish d) {
 	
 	public void setGenericDiscountFactor(double genericDiscountFactor) {
 		this.genericDiscountFactor = genericDiscountFactor;
+		this.notifyObservers();
 	}
 	
 	public double getSpecialDiscountFactor() {
@@ -154,6 +155,7 @@ public void addDish(Dish d) {
 	
 	public void setSpecialDiscountFactor(double specialDiscountFactor) {
 		this.specialDiscountFactor = specialDiscountFactor;
+		this.notifyObservers();
 	}
 	
 	public ArrayList<Order> getShippedOrders() {

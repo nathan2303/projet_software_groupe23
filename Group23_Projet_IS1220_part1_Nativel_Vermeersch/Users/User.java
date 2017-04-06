@@ -17,14 +17,14 @@ public abstract class User {
   
   public User(){
 	  super();
-	  this.Counter++;
+	  Counter++;
 	  this.id=Counter;
 	  
   }
 
 public User(String username, String password) {
 	super();
-	this.Counter++;
+	Counter++;
 	this.id = Counter;
 	this.username = username;
 	this.password = password;
