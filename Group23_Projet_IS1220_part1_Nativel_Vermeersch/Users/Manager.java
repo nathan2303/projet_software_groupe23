@@ -1,4 +1,7 @@
 package Users;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import Main.Date;
 import Main.MyFoodora;
 import Policies.DeliveryPolicy;
@@ -74,8 +77,8 @@ public class Manager extends User {
 	}
 	
 	public void determineMostLessSellingRestaurant(){
-		String mostRes;
-		String lessRes;
+		String mostRes = new String();
+		String lessRes = new String();
 		double mostSell = 0.0;
 		double lessSell = system.computeTotalIncome();  // je prends cette valeur initiale car un restaurant ne peut pas vendre plus que le revenu total du système
 		for (String mapKey : system.restaurantsList.keySet()){
@@ -89,7 +92,33 @@ public class Manager extends User {
 				lessRes = mapKey;
 			}
 					
-				}
 		}
-
+	System.out.println("the most selling restaurant is "+mostRes+" with "+mostSell +"of sells");
+	System.out.println("the most selling restaurant is "+lessRes+" with "+lessSell +" of sells");	
+	}
+	
+	public void determineMoreLessActiveCourier(){
+		HashMap<String, Courier> list = system.getCouriersList();
+		if (list.isEmpty() == false){
+			
+		String maxres = new String();
+		int maxresOccupation = 0;
+		String minres = new String();
+		int minresOccupation = system.getCompletedOrders().size();
+		
+		for (String c : list.keySet()){
+			if (list.get(c).getDeliveredOrders().size()>maxresOccupation){
+					maxres = c;
+					maxresOccupation = list.get(c).getDeliveredOrders().size();
+	}
+			if (list.get(c).getDeliveredOrders().size() < minresOccupation){
+				minres = c;
+				minresOccupation = list.get(c).getDeliveredOrders().size();
+				
+				
+			}
+			}
+		System.out.println("the most active courier is" + maxres + ",  with " + maxresOccupation +" courses");
+		System.out.println("the less active courier is" + minres + ", with " + minresOccupation + " courses");
 }
+	}}
