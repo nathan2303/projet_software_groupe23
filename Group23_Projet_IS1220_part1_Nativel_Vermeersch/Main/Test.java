@@ -23,7 +23,7 @@ public class Test {
 	
 	public static void main(String[] args) {
 		MyFoodora system = MyFoodora.getInstance();
-		Courier c = new Courier("larbin","larb","AZERTY",new Address(3,2),"000");
+		Courier c = new Courier("Larbin","Monsieur","larb","AZERTY",new Address(3,2),"000");
 		system.addUser(c);
 		system.setDeliveryPolicy(new FastestDelivery());
 		Starter s1 = new Starter(5, "saumon fumé", DishType.Standard);
@@ -42,6 +42,7 @@ public class Test {
 		System.out.println(c1.getOrdersList());
 		System.out.println(((Meal)r1.getShippedOrders().get(0).getContent().get(0)).getDishes().get(0).getName());
 		System.out.println(c1.getOrdersList().get(0).getDate().toString());
+		
 		
 	}
 

@@ -70,17 +70,21 @@ public class Customer extends User implements Observer {
 		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
 		for (Restaurant r : list)
 			this.registerNotifications(r);
+		System.out.println(this.surname + " " + this.name + " has been successfully registered for all notifications.");
 	}
 	
 	public void unregisterAllNotifications(){
 		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
 		for (Restaurant r : list)
 			this.unregisterNotifications(r);
+		System.out.println(this.surname + " " + this.name + " has been successfully unregistered for all notifications.");
 	}
 	
 	public void update(Restaurant r) {
-		  System.out.println("Customer " + name + "has received the promotional offer from " + r.getName());
+		  System.out.println("Customer " + this.surname + " "+ this.name + "has received the promotional offer from " + r.getName());
+		  System.out.println(r.getGenericDiscountFactor() + " discount for the all the meals!");
 		  System.out.println(r.getSpecialDiscountFactor() + " discount for the meals of the week!");
+		  System.out.println("The new meals of the week: " + r.getMealsOfTheWeek().toString());
 	  }
 	
 	public Address getAddress() {
