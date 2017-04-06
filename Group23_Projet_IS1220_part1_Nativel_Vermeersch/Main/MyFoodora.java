@@ -175,6 +175,12 @@ public class MyFoodora {
 	  return res;
   }
   
+  public double[] computeLastMonthIncomePerCustomerBis(){
+	  int currentMonth = Date.getCurrentMonth();
+	  double[] res = this.computeIncomePerCustomerBis(new Date(1,currentMonth-1), new Date(30, currentMonth-1));
+	  return res;
+  }
+  
   /**
    * computes the profit for a period of time, according to the followinf formula:
    * profit = order_price * markup + service_fee - delivery_cost

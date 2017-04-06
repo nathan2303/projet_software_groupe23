@@ -18,9 +18,9 @@ public class TargetProfit_Markup implements ProfitPolicy {
 	}
 
 	public double[] computeProfitFigures(){
-		double incomeLastMonth = system.computeLastMonthIncome();
+		double[] incomeLastMonth = system.computeLastMonthIncomePerCustomerBis();
 		double[] res = new double[3];
-		res[0] = Math.max(0,(this.deliveryCost - this.serviceFee + this.targetProfit)/incomeLastMonth);
+		res[0] = Math.max(0,(this.deliveryCost - this.serviceFee + this.targetProfit/incomeLastMonth[1])/incomeLastMonth[0]);
 		res[1] = this.serviceFee;
 		res[2] = this.deliveryCost;
 		return res;
