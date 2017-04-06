@@ -49,4 +49,21 @@ public class FullMeal extends Meal {
 			throw new InvalidFullMealException();
 	}
 	
+	public static void main(String[] args) {
+		Dish s1 = new Starter(5, "saumon fumé", DishType.Standard);
+		MainDish md1 = new MainDish(10, "pizza végétarienne", DishType.Vegetarian);
+		MainDish md2 = new MainDish(10, "pizza végétarienne", DishType.Vegetarian);
+		ArrayList<Dish> dishes = new ArrayList<Dish>();
+		dishes.add(s1);
+		dishes.add(md1);
+		dishes.add(md2);
+		
+		try {
+			FullMeal meal = new FullMeal("menu1", dishes);
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
 }
