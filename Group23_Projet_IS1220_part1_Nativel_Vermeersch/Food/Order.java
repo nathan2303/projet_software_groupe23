@@ -41,6 +41,7 @@ public class Order {
 		this.content = content;
 		this.date = new Date();
 		this.price = computeOrderPrice(content);
+		this.price = this.price * customer.getFidelityCardList().get(restaurant).useCard(this.price);
 		this.profit = this.price*system.getMarkupPercentage()+system.getServiceFee()-system.getDeliveryCost();
 	}
 	

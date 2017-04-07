@@ -1,6 +1,11 @@
 package Users;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import Fidelity.BasicFidelityCard;
+import Fidelity.FidelityCard;
+import Fidelity.LotteryFidelityCard;
+import Fidelity.PointFidelityCard;
 import Food.Food;
 import Food.Order;
 
@@ -18,7 +23,7 @@ public class Customer extends User implements Observer {
   
   private ArrayList<Order> ordersList = new ArrayList<Order>();
   
-  
+  private HashMap<Restaurant,FidelityCard> fidelityCardList;
 
 	public Customer() {
 		super();
@@ -32,6 +37,10 @@ public class Customer extends User implements Observer {
 		this.phoneNumber = phoneNumber;
 		this.name = name;
 		this.surname = surname;
+		this.setFidelityCardList(new HashMap<Restaurant, FidelityCard>());
+		for (Restaurant mapKey: getFidelityCardList().keySet()){
+			getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
+		}
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -137,9 +146,40 @@ public class Customer extends User implements Observer {
 	public void setOrdersList(ArrayList<Order> ordersList) {
 		this.ordersList = ordersList;
 	}
-
+	/*
+	 * crée une carte de fidélité à points dans le restaurant en argument. Attention: si le client possède déjà une carte de fidélité,celle ci est effacée
+	 */
+	public void registerPointFidelityCard(Restaurant restaurant){
+		PointFidelityCard card = new PointFidelityCard(restaurant, this);
+		this.getFidelityCardList().put(restaurant, card);
+		
+	}
+	
+	/*
+	 * crée une carte de fidélité lotterie dans le restaurant en argument. Attention si le client possède déjà une carte de fidélité celle-ci est effacée
+	 */
+	public void registerLotteryFidelityCard(Restaurant restaurant, double probability){
+		LotteryFidelityCard card = new  LotteryFidelityCard(probability, this, restaurant);
+		this.getFidelityCardList().put(restaurant, card);
+		
+	}
 	public static void main(String[] args) {
 		
 	}
 
+	public HashMap<Restaurant,FidelityCard> getFidelityCardList() {
+		return fidelityCardList;
+	}
+
+	public void setFidelityCardList(HashMap<Restaurant,FidelityCard> fidelityCardList) {
+		this.fidelityCardList = fidelityCardList;
+	}
+	/*
+	 * Losqu'on se désabonne d'un programme de fidélité la carte de fidélité du restaurant redevient basique
+	 */
+	public void unregisterFidelityCard(Restaurant r){
+		this.fidelityCardList.put(r, new BasicFidelityCard(r,this));
+		
+	}
+	
 }
