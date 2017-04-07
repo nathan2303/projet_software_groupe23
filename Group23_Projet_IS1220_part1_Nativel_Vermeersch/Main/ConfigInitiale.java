@@ -18,6 +18,8 @@ import Users.Customer;
 import Users.Manager;
 import Users.Restaurant;
 import Users.Manager;
+
+
 public class ConfigInitiale  {
 	
 	
