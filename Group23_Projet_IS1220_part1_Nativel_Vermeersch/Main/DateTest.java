@@ -8,10 +8,10 @@ public class DateTest extends TestCase {
 		Date date = new Date();
 		int a = date.getNonStaticCounter();
 		date.goTomorrow();
-		
+		assertTrue( date.getNonStaticCounter() == a+1);
 		
 				
-		assertTrue(a + 1 == date.getNonStaticCounter());
+		
 	}
 
 	public void testAdvanceInTime() {
