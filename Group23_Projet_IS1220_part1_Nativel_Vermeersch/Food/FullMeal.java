@@ -27,6 +27,15 @@ public class FullMeal extends Meal {
 		super.price = computeMealPrice(this.dishes);
 		this.mealType = findMealType(this.dishes);
 	}
+	public FullMeal(Starter starter, MainDish mainDish, Dessert dessert){
+		super.name="Full meal";
+		super.dishes = new ArrayList<Dish>();
+		super.dishes.add(starter);
+		super.dishes.add(mainDish);
+		super.dishes.add(dessert);
+		super.price = computeMealPrice(this.dishes);
+		this.mealType = findMealType(this.dishes);
+	}
 	
 	/** checks there are one starter, one maindish and one dessert, throws Exception if not
 	 * 
@@ -49,6 +58,9 @@ public class FullMeal extends Meal {
 			throw new InvalidFullMealException();
 	}
 	
+
+	  
+	  
 	public static void main(String[] args) {
 		Dish s1 = new Starter(5, "saumon fumé", DishType.Standard);
 		MainDish md1 = new MainDish(10, "pizza végétarienne", DishType.Vegetarian);

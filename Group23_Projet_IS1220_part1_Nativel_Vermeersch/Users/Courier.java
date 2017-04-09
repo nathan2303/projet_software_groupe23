@@ -1,6 +1,7 @@
 package Users;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Food.Order;
 
@@ -17,19 +18,32 @@ public class Courier extends User {
   private String name;
 
   private String surname;
+  
+  private Random rand = new Random();
 
   public Courier() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-	public Courier(String name, String surname,String username, String password, Address position, String phoneNumber) {
+	public Courier(String name, String surname, String username, String password, Address position, String phoneNumber) {
 		super(username, password);
 		this.phoneNumber = phoneNumber;
 		this.position = position;
 		this.isOnDuty=true;
 		this.name = name;
 		this.surname = surname;
+		
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Courier(String name, String surname, String username, String password) {
+		super(username, password);
+		this.isOnDuty=true;
+		this.name = name;
+		this.surname = surname;
+		this.position = new Address(Math.rint(Math.random()*5000)/100,Math.rint(Math.random()*5000)/1000);
+		this.phoneNumber = "06" + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10);
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -158,6 +172,10 @@ public static void main(String[] args) {
 	c.addDeliveredOrders(order2);
 	System.out.println(c.getDeliveredOrders());
 	System.out.println(c.position);
+}
+
+public String toString(){
+	return this.surname + " " + this.name;
 }
 
 

@@ -81,14 +81,14 @@ public class Manager extends User {
 		String lessRes = new String();
 		double mostSell = 0.0;
 		double lessSell = system.computeTotalIncome();  // je prends cette valeur initiale car un restaurant ne peut pas vendre plus que le revenu total du système
-		for (String mapKey : system.restaurantsList.keySet()){
-			if ( system.restaurantsList.get(mapKey).getTotalProfit() > mostSell)
+		for (String mapKey : system.getRestaurantsList().keySet()){
+			if ( system.getRestaurantsList().get(mapKey).getTotalProfit() > mostSell)
 			{
-				mostSell = system.restaurantsList.get(mapKey).getTotalProfit();
+				mostSell = system.getRestaurantsList().get(mapKey).getTotalProfit();
 				mostRes = mapKey;
 			}
-			if ( system.restaurantsList.get(mapKey).getTotalProfit() < lessSell){
-				lessSell = system.restaurantsList.get(mapKey).getTotalProfit();
+			if ( system.getRestaurantsList().get(mapKey).getTotalProfit() < lessSell){
+				lessSell = system.getRestaurantsList().get(mapKey).getTotalProfit();
 				lessRes = mapKey;
 			}
 					
@@ -110,15 +110,18 @@ public class Manager extends User {
 			if (list.get(c).getDeliveredOrders().size()>maxresOccupation){
 					maxres = c;
 					maxresOccupation = list.get(c).getDeliveredOrders().size();
-	}
+			}
 			if (list.get(c).getDeliveredOrders().size() < minresOccupation){
 				minres = c;
 				minresOccupation = list.get(c).getDeliveredOrders().size();
-				
-				
 			}
-			}
+		}
 		System.out.println("the most active courier is" + maxres + ",  with " + maxresOccupation +" courses");
 		System.out.println("the less active courier is" + minres + ", with " + minresOccupation + " courses");
+		}
+	}
+	public String toString(){
+		return this.surname + " " + this.name;
+	}
+	
 }
-	}}

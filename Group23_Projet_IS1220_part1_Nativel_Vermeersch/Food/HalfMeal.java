@@ -25,6 +25,24 @@ public class HalfMeal extends Meal {
 
 	}
 	
+	public HalfMeal(Starter starter, MainDish mainDish){
+		super.name="Half meal: starter & main-dish";
+		super.dishes = new ArrayList<Dish>();
+		super.dishes.add(starter);
+		super.dishes.add(mainDish);
+		super.price = computeMealPrice(this.dishes);
+		this.mealType = findMealType(this.dishes);
+	}
+	
+	public HalfMeal(MainDish mainDish, Dessert dessert){
+		super.name="Half meal: main-dish & dessert";
+		super.dishes = new ArrayList<Dish>();
+		super.dishes.add(mainDish);
+		super.dishes.add(dessert);
+		super.price = computeMealPrice(this.dishes);
+		this.mealType = findMealType(this.dishes);
+	}
+	
 	public HalfMeal() {
 		super();
 		// TODO Auto-generated constructor stub

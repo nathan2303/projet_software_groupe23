@@ -11,14 +11,14 @@ public class ManagerTest extends TestCase {
 		ConfigInitiale.launch();
 		Customer c1 = new Customer("Nathanou", "Vermeerschou", "nverou", "1234", new Address(0, 0), "nv@gmail.com", "0000");
 		MyFoodora system = MyFoodora.getInstance();
-		system.managersList.get("michou").addUser(c1);
-		assertTrue(system.customersList.containsKey("nverou"));
+		system.getManagersList().get("michou").addUser(c1);
+		assertTrue(system.getCustomersList().containsKey("nverou"));
 	}
 
 	public void testComputeProfit() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		Date d1 = new Date(1,1);
 		Date d2 = new Date(1,2);
 		assertTrue(manager.computeProfit(d1,d2) == 0);
@@ -28,7 +28,7 @@ public class ManagerTest extends TestCase {
 	public void testComputeTotalProfit() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		assertTrue(manager.computeTotalProfit() != 0);
 	}
 /*
@@ -37,7 +37,7 @@ public class ManagerTest extends TestCase {
 	public void testComputeIncome() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		Date d1 = new Date(1,1);
 		Date d2 = new Date(1,2);
 		assertTrue(manager.computeIncome(d1, d2) == 0);
@@ -48,14 +48,14 @@ public class ManagerTest extends TestCase {
 	public void testComputeTotalIncome() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		assertTrue(manager.computeTotalIncome() !=0);
 	}
 
 	public void testComputeIncomePerCustomer() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		Date d1 = new Date(1,1);
 		Date d2 = new Date(1,2);
 		assertTrue(manager.computeIncomePerCustomer(d1, d2) == 0);
@@ -64,7 +64,7 @@ public class ManagerTest extends TestCase {
 	public void testSetProfitPolicy() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		manager.setProfitPolicy(new TargetProfit_Markup(1.0, 1.0, 1.0));
 		assertTrue(system.getProfitPolicy().getClass()==TargetProfit_Markup.class);
 	}
@@ -72,7 +72,7 @@ public class ManagerTest extends TestCase {
 	public void testDetermineMostLessSellingRestaurant() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		manager.determineMostLessSellingRestaurant();
 		
 	}
@@ -80,7 +80,7 @@ public class ManagerTest extends TestCase {
 	public void testDetermineMoreLessActiveCourier() {
 		ConfigInitiale.launch();
 		MyFoodora system = MyFoodora.getInstance();
-		Manager manager = system.managersList.get("michou");
+		Manager manager = system.getManagersList().get("michou");
 		manager.determineMoreLessActiveCourier();
 	}
 

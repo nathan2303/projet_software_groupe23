@@ -1,8 +1,14 @@
 package Main;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import Food.Dessert;
+import Food.DishType;
+import Food.Food;
+import Food.MainDish;
+import Food.Meal;
+import Food.Starter;
 import Users.Address;
 import Users.Courier;
 import Users.Customer;
@@ -18,12 +24,18 @@ public class MainTest {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * runs a first command line like test. Fulfils the basic requirements of the program
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		MyFoodora system = MyFoodora.getInstance();
 		ConfigInitiale.launch();
 		boolean running = true;
-		System.out.println("Welcome to MyFoodora!");
+		System.out.println("Welcome to MyFoodora! We are on " + new Date() +".");
+		String[] command;
+		String command2;
 		while (running){
 			System.out.println("Do you already have an account?");
 			System.out.println("1 - Yes / 2 - No");
@@ -173,6 +185,10 @@ public class MainTest {
 							System.out.println("You will be disconnected. Good-bye!");
 							connected = false;
 							break;
+							
+						default:
+							System.out.println("Interface not yet implemented. Please try again later.");
+							break;
 						
 						}
 					}
@@ -180,28 +196,107 @@ public class MainTest {
 				if (user instanceof Customer){
 					Customer customer = (Customer)user;
 					System.out.println("Welcome "+customer.getSurname()+" "+customer.getName()+"!");
+					System.out.println("Here is the list of restaurants.");
+					System.out.println(system.getRestaurantsList());
 					while (connected){
-						System.out.println("What do you want to do?");
-						System.out.println("0 - Disconnect");
-						System.out.println("1 - Order a meal");
-						switch(in.nextInt()){
-						case 0:
-							System.out.println("You will be disconnected. Good-bye!");
+						System.out.println("Enter a command.");
+						command = in.nextLine().split(" ");
+						switch(command[0]){
+						case "logout":
 							connected = false;
 							break;
-						case 1:
-							System.out.println("Here is the list of the restaurants:");
-							HashMap<String, Restaurant> list = system.getRestaurantsList();
-							for (String r : list.keySet()){
-								System.out.println(r + ": "+list.get(r));
+						case "createOrder":
+							Restaurant restaurant = system.getRestaurantsList().get(command[1]);
+							ArrayList<Food> content = new ArrayList<>();
+							System.out.println("Here is the menu of "+restaurant.getName());
+							System.out.println(restaurant.getDishes());
+							System.out.println(restaurant.getMeals());
+							boolean ordering = true;
+							while (ordering){
+								command = in.nextLine().split(" ");
+								if (command[0].equals("endOrder")){
+									ordering = false;
+									break;}
+								command2 = command[1];
+								for (int i=2;i<command.length;i++){
+									command2+=" " + command[i];
+									}
+								content.add(restaurant.getItems().get(command2));							
 							}
-							System.out.println("Type the username of the restaurant you want.");
-							Restaurant chosenRestaurant = list.get(in.nextLine());
-							System.out.println("Here is the menu 'à la carte' of the restaurant "+chosenRestaurant.getName());
-							System.out.println(chosenRestaurant.getDishes());
+							System.out.println(content);
+							customer.order(content,restaurant);
+							break;
+						case "help":
+							System.out.println("Available commands for a customer:");
+							System.out.println("logout");
+							System.out.println("createOrder <restaurant>");
+							break;
+						default:
+							System.out.println("You entered a wrong command. Please use the command 'help'.");
+							break;
 						}
-					}
+					
+					}	
 				}	
+				if (user instanceof Restaurant){
+					Restaurant restaurant = (Restaurant)user;
+					System.out.println("Welcome "+restaurant.getName()+"! Here is your menu:");
+					System.out.println(restaurant.getDishes());
+					System.out.println(restaurant.getMeals());
+					while (connected){
+						System.out.println("Enter a command.");
+						command = in.nextLine().split(" ");
+						switch(command[0]){
+						case "logout":
+							connected = false;
+							break;
+						case "addDishRestaurantMenu":
+							switch(command[2].toLowerCase()){
+							case "starter":
+								Starter starter = new Starter(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3]));
+								restaurant.addDish(starter);
+								break;
+							case "main":
+								MainDish maindish = new MainDish(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3]));
+								restaurant.addDish(maindish);
+								break;
+							case "dessert":
+								Dessert dessert = new Dessert(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3]));
+								restaurant.addDish(dessert);
+								break;
+							default:
+								System.out.println("Please enter one of the following food categories: starter, main or dessert.");
+						}
+							break;
+						case "createMeal":
+							System.out.println("Interface not yet implemented. Please try later.");
+							break;
+						case "setSpecialOffer":
+							command2 = command[1];
+							for (int i=2;i<command.length;i++){
+								command2+=" " + command[i];
+								}
+							restaurant.addMealOfTheWeek((Meal)restaurant.getItems().get(command2));
+							break;
+						case "removeFromSpecialOffer":
+							command2 = command[1];
+							for (int i=2;i<command.length;i++){
+								command2+=" " + command[i];
+								}
+							restaurant.removeMealOfTheWeek((Meal)restaurant.getItems().get(command2));
+							break;
+						case "help":
+							System.out.println("Available commands for a customer:");
+							System.out.println("logout");
+							System.out.println("addDishRestaurantMenu <dishName> <dishCategory> <foodCategory> <unitPrice>");
+							System.out.println("createMeal");
+							break;
+						default:
+							System.out.println("You entered a wrong command. Please use the command 'help'.");
+							break;
+						}
+					}	
+				}
 			}
 		}
 	}

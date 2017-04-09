@@ -20,20 +20,20 @@ import Users.User;
  */
 public class MyFoodora {
 
-  public double markupPercentage = 0.05;
-  public double serviceFee = 5;
-  public double deliveryCost = 7;
-  public HashMap<String, User> usersList = new HashMap<String, User>();
-  public HashMap<String, User> activatedUsersList = new HashMap<String, User>();
-  public HashMap<String, Restaurant> restaurantsList = new HashMap<String, Restaurant>();
-  public HashMap<String, Customer> customersList = new HashMap<String, Customer>();
-  public HashMap<String, Courier> couriersList = new HashMap<String, Courier>();
-  public ArrayList<Courier> onDutyCouriersList = new ArrayList<Courier>();
-  public HashMap<String,Manager> managersList = new HashMap<String,Manager>();
-  public ArrayList<Order> completedOrders = new ArrayList<Order>();
-  public DeliveryPolicy deliveryPolicy;
-  public ProfitPolicy profitPolicy;
-  public static MyFoodora instance = null;
+  private double markupPercentage = 0.05;
+  private double serviceFee = 5;
+  private double deliveryCost = 7;
+  private HashMap<String, User> usersList = new HashMap<String, User>();
+  private HashMap<String, User> activatedUsersList = new HashMap<String, User>();
+  private HashMap<String, Restaurant> restaurantsList = new HashMap<String, Restaurant>();
+  private HashMap<String, Customer> customersList = new HashMap<String, Customer>();
+  private HashMap<String, Courier> couriersList = new HashMap<String, Courier>();
+  private ArrayList<Courier> onDutyCouriersList = new ArrayList<Courier>();
+  private HashMap<String,Manager> managersList = new HashMap<String,Manager>();
+  private ArrayList<Order> completedOrders = new ArrayList<Order>();
+  private DeliveryPolicy deliveryPolicy;
+  private ProfitPolicy profitPolicy;
+  private static MyFoodora instance = null;
   
   
   /**
@@ -335,6 +335,11 @@ public class MyFoodora {
 		Customer c1 = new Customer("Nathan", "Vermeersch", "nver", "1234", new Address(0, 0), "nv@gmail.com", "0000");
 		system.addUser(c1);
 		System.out.println(system.getActivatedUsersList());
+		
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add(1);
+		list.add(2);
+		System.out.println(list);
 
 	}
   

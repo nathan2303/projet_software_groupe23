@@ -1,7 +1,9 @@
 package Users;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
+import Fidelity.BasicFidelityCard;
 import Food.Dish;
 import Food.Food;
 import Food.Meal;
@@ -15,6 +17,8 @@ public class Restaurant extends User implements Visitor, Observable {
   private ArrayList<Dish> dishes = new ArrayList<Dish>();
 
   private ArrayList<Meal> meals = new ArrayList<Meal>();
+  
+  private HashMap<String,Food> items = new HashMap<String,Food>();
 
   private double genericDiscountFactor = 0.05;
 
@@ -36,32 +40,58 @@ public class Restaurant extends User implements Visitor, Observable {
   
   
 
-  public Restaurant(String name, String username, String password, Address address) {
-	super(username, password);
-	this.name = name;
-	this.address = address;
-	this.totalProfit = 0.0;
-	
-	// TODO Auto-generated constructor stub
-}
+	  public Restaurant(String name, String username, String password, Address address) {
+		super(username, password);
+		this.name = name;
+		this.address = address;
+		this.totalProfit = 0.0;
+		ArrayList<Customer> list = new ArrayList<Customer>(this.system.getCustomersList().values());
+		if (!list.isEmpty()){
+			for (Customer c : list){
+				if (!c.getFidelityCardList().containsKey(this))
+					c.getFidelityCardList().put(this, new BasicFidelityCard(this, c));	
+			}
+		}
+	  }
+		
+		// TODO Auto-generated constructor stub
+	  public Restaurant(String name, String username, String password) {
+			super(username, password);
+			this.name = name;
+			this.totalProfit = 0.0;
+			ArrayList<Customer> list = new ArrayList<Customer>(this.system.getCustomersList().values());
+			if (!list.isEmpty()){
+				for (Customer c : list){
+					if (!c.getFidelityCardList().containsKey(this))
+						c.getFidelityCardList().put(this, new BasicFidelityCard(this, c));	
+				}
+			}
+			this.address = new Address(Math.rint(Math.random()*5000)/100,Math.rint(Math.random()*5000)/1000);
+		}
 
 public void addDish(Dish d) {
 	this.dishes.add(d);
+	this.items.put(d.getName(), d);
   }
 
   public void removeDish(Dish d) {
 	  this.dishes.remove(d);
+	  this.items.remove(d.getName());
   }
 
   public void addMeal(Meal m) {
-	  this.meals.add(m);	  
+	  this.meals.add(m);	
+	  this.items.put(m.getName(), m);
   }
 
   public void removeMeal(Meal m) {
 	  this.meals.add(m);
+	  this.items.remove(m.getName());
   }
 
-  public void sortShippedOrders() {
+  public void sortShippedOrders(ShippedOrderSortingPolicy sosp) {
+	  TreeMap<Food,Integer> res = sosp.sortOrders(this.shippedOrders);
+	  System.out.println(res);
   }
   
   public void addOrder(Order order){
@@ -121,9 +151,6 @@ public void addDish(Dish d) {
 		return dishes;
 	}
 	
-	public void addDish(ArrayList<Dish> dishes) {
-		this.dishes = dishes;
-	}
 	public void removeDish(ArrayList<Dish> dishes) {
 		this.dishes = dishes;
 	}
@@ -132,9 +159,6 @@ public void addDish(Dish d) {
 		return meals;
 	}
 	
-	public void addMeal(ArrayList<Meal> meals) {
-		this.meals = meals;
-	}
 	
 	public void removeMeal(ArrayList<Meal> meals) {
 		this.meals = meals;
@@ -177,6 +201,14 @@ public void addDish(Dish d) {
 	public void setMealsOfTheWeek(ArrayList<Meal> mealsOfTheDay) {
 		this.mealsOfTheWeek = mealsOfTheDay;
 	}
+	public void addMealOfTheWeek(Meal m) {
+		this.mealsOfTheWeek.add(m);
+		this.notifyObservers();
+	}
+	public void removeMealOfTheWeek(Meal m) {
+		this.mealsOfTheWeek.remove(m);
+		this.notifyObservers();
+	}
 
 public static void main(String[] args) {
 	  Restaurant r1 = new Restaurant();
@@ -189,5 +221,21 @@ public double getTotalProfit(){
 	return this.totalProfit;
 }
 
+
+public HashMap<String, Food> getItems() {
+	return items;
+}
+
+
+
+public void setItems(HashMap<String, Food> items) {
+	this.items = items;
+}
+
+
+
+public String toString(){
+	return this.name;
+}
 
 }

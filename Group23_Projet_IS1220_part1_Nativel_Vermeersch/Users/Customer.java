@@ -1,6 +1,8 @@
 package Users;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 import Fidelity.BasicFidelityCard;
 import Fidelity.FidelityCard;
@@ -8,6 +10,7 @@ import Fidelity.LotteryFidelityCard;
 import Fidelity.PointFidelityCard;
 import Food.Food;
 import Food.Order;
+import Main.Date;
 
 public class Customer extends User implements Observer {
 
@@ -21,9 +24,13 @@ public class Customer extends User implements Observer {
 
   private String surname;
   
+  private Date birthday;
+  
   private ArrayList<Order> ordersList = new ArrayList<Order>();
   
   private HashMap<Restaurant,FidelityCard> fidelityCardList;
+  
+  private Random rand = new Random();
 
 	public Customer() {
 		super();
@@ -38,13 +45,63 @@ public class Customer extends User implements Observer {
 		this.name = name;
 		this.surname = surname;
 		this.setFidelityCardList(new HashMap<Restaurant, FidelityCard>());
-		for (Restaurant mapKey: getFidelityCardList().keySet()){
-			getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
+		List <Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
+		for (Restaurant mapKey: list){
+			this.getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
 		}
+		this.birthday = new Date(rand.nextInt(30)+1,rand.nextInt(12)+1);
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Customer(String name, String surname, String username, String password, Address address, String emailAddress, String phoneNumber, Date birthday) {
+		super(username, password);
+		this.address = address;
+		this.emailAddress = emailAddress;
+		this.phoneNumber = phoneNumber;
+		this.name = name;
+		this.surname = surname;
+		this.setFidelityCardList(new HashMap<Restaurant, FidelityCard>());
+		List <Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
+		for (Restaurant mapKey: list){
+			this.getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
+		}
+		this.birthday = birthday;
+		// TODO Auto-generated constructor stub
+	}
+	public Customer(String name, String surname, String username, String password) {
+		super(username, password);
+
+		this.name = name;
+		this.surname = surname;
+		this.setFidelityCardList(new HashMap<Restaurant, FidelityCard>());
+		List <Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
+		for (Restaurant mapKey: list){
+			this.getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
+		}
+		this.birthday = new Date(rand.nextInt(30)+1,rand.nextInt(12)+1);
+		// TODO Auto-generated constructor stub
 	
+		this.address = new Address(Math.rint(Math.random()*5000)/100,Math.rint(Math.random()*5000)/1000);
+		this.phoneNumber = "06" + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10);
+		this.emailAddress = this.surname.toLowerCase()+ "." + this.name.toLowerCase() + "@live.com";
+	}
+	
+	public Customer(String name, String surname, String username, String password, Date birthday) {
+		super(username, password);
+
+		this.name = name;
+		this.surname = surname;
+		this.setFidelityCardList(new HashMap<Restaurant, FidelityCard>());
+		List <Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
+		for (Restaurant mapKey: list){
+			this.getFidelityCardList().put(mapKey,  new BasicFidelityCard(mapKey,this));
+		}
+		this.birthday = birthday;
+	
+		this.address = new Address(Math.rint(Math.random()*5000)/100,Math.rint(Math.random()*5000)/1000);
+		this.phoneNumber = "06" + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10);
+		this.emailAddress = this.surname.toLowerCase()+ "." + this.name.toLowerCase() + "@live.com";
+	}
 	
 	
 	public void order(ArrayList<Food> content, Restaurant r) {
@@ -53,7 +110,9 @@ public class Customer extends User implements Observer {
 		if (c==null)
 			System.out.println("MyFoodora could not find any available courier to ship your order. Please try again later.");
 		else{
-			System.out.println("Your order has been processed. You will soon receive your meals.");
+			System.out.println("Your order has been processed. You will soon receive your meals thanks to your devoted courier: "+ c + " (" + c.getPhoneNumber() +").");
+			System.out.println("Here is a quick recap of your order. Have a nice meal with Foodora!");
+			System.out.println(order);
 			r.addOrder(order);
 			this.addOrder(order);
 			system.addOrder(order);
@@ -77,14 +136,14 @@ public class Customer extends User implements Observer {
 	  }
 	
 	public void registerAllNotifications(){
-		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
 		for (Restaurant r : list)
 			this.registerNotifications(r);
 		System.out.println(this.surname + " " + this.name + " has been successfully registered for all notifications.");
 	}
 	
 	public void unregisterAllNotifications(){
-		ArrayList<Restaurant> list = (ArrayList<Restaurant>)system.getRestaurantsList().values();
+		ArrayList<Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
 		for (Restaurant r : list)
 			this.unregisterNotifications(r);
 		System.out.println(this.surname + " " + this.name + " has been successfully unregistered for all notifications.");
@@ -146,8 +205,9 @@ public class Customer extends User implements Observer {
 	public void setOrdersList(ArrayList<Order> ordersList) {
 		this.ordersList = ordersList;
 	}
-	/*
-	 * crée une carte de fidélité à points dans le restaurant en argument. Attention: si le client possède déjà une carte de fidélité,celle ci est effacée
+	/**
+	 * creates a PointFidelityCard with 0 point. Warning: if there was already a fidelity card, the previous one will be deleted!
+	 * @param restaurant
 	 */
 	public void registerPointFidelityCard(Restaurant restaurant){
 		PointFidelityCard card = new PointFidelityCard(restaurant, this);
@@ -158,8 +218,8 @@ public class Customer extends User implements Observer {
 	/*
 	 * crée une carte de fidélité lotterie dans le restaurant en argument. Attention si le client possède déjà une carte de fidélité celle-ci est effacée
 	 */
-	public void registerLotteryFidelityCard(Restaurant restaurant, double probability){
-		LotteryFidelityCard card = new  LotteryFidelityCard(probability, this, restaurant);
+	public void registerLotteryFidelityCard(Restaurant restaurant){
+		LotteryFidelityCard card = new  LotteryFidelityCard(restaurant, this);
 		this.getFidelityCardList().put(restaurant, card);
 		
 	}
@@ -180,6 +240,10 @@ public class Customer extends User implements Observer {
 	public void unregisterFidelityCard(Restaurant r){
 		this.fidelityCardList.put(r, new BasicFidelityCard(r,this));
 		
+	}
+	
+	public String toString(){
+		return this.surname + " " + this.name;
 	}
 	
 }

@@ -7,19 +7,17 @@ import Users.Restaurant;
 
 public class LotteryFidelityCard extends FidelityCard {
 
-  public double probability;
+  public double probability = 0.2;
 
-public LotteryFidelityCard(double probability, Customer owner, Restaurant restaurant) {
-	super();
-	this.probability = probability;
-	this.owner = owner;
-	this.restaurant = restaurant;
+public LotteryFidelityCard(Restaurant restaurant, Customer customer) {
+	super(restaurant, customer);
+	// TODO Auto-generated constructor stub
 }
 
-
-/*
- * l'utilisation d'une carte lotterie renvoie  0 si la commande est gratuite avec une probabilité "probability", et 1 sinon
+/**
+ * the use of this card Lottery makes the order free with a given probability (0.2 by default)
  * @see Fidelity.FidelityCard#useCard(double)
+ * @return the multiplying factor (0 or 1 in this case)
  */
 public double useCard(double price){
 	Random r = new Random();
@@ -28,6 +26,14 @@ public double useCard(double price){
 	else { return 1;}
 	
 	
+}
+
+public double getProbability() {
+	return probability;
+}
+
+public void setProbability(double probability) {
+	this.probability = probability;
 }
   
 
