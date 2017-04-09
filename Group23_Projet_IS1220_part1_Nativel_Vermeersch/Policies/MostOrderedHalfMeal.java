@@ -1,6 +1,7 @@
 package Policies;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import Food.Food;
@@ -18,8 +19,8 @@ public class MostOrderedHalfMeal implements ShippedOrderSortingPolicy {
 	}
 
 	@Override
-	public TreeMap<Food, Integer> sortOrders(ArrayList<Order> orders){
-		TreeMap<Food,Integer> res = new TreeMap<>();
+	public HashMap<Food, Integer> sortOrders(ArrayList<Order> orders){
+		HashMap<Food,Integer> res = new HashMap<>();
 		for (Order o : orders){
 			ArrayList<Food> list = o.getContent();
 			

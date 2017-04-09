@@ -11,27 +11,12 @@ public class DateTest extends TestCase {
 		assertTrue( date.getNonStaticCounter() == a+1);
 		
 				
-		
+	}
+	public void testCompareTo(){
+	
+		Date d1 = new Date(1, Date.getCurrentMonth());
+		Date d2 = new Date(2,Date.getCurrentMonth());
+		assertTrue(d1.compareTo(d2) < 0);
+	}
 	}
 
-	public void testAdvanceInTime() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetCurrentDay() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetCurrentDayName() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetCurrentDate() {
-		fail("Not yet implemented");
-	}
-
-	public void testMain() {
-		fail("Not yet implemented");
-	}
-
-}

@@ -18,7 +18,10 @@ import Main.MyFoodora;
 import junit.framework.TestCase;
 
 public class MostOrderedHalfMealTest extends TestCase {
-
+	/*
+	 * Je regarde si le compteur de halfmeal fonctionne bien en rentrant deux fois le repas h2 
+	 * et en regardant si le compteur compte bien deux
+	 */
 	public void testSortOrders() throws InvalidHalfMealException {
 		MyFoodora system = MyFoodora.getInstance();
 		ConfigInitiale.launch();
