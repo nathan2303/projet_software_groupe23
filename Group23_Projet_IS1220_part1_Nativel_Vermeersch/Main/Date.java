@@ -79,6 +79,8 @@ public class Date implements Comparable<Date> {
 	
 	public int findCounter(int day, int month){
 		switch (month){
+		case 3 :
+			return(-31+day);
 		case 4 :
 			return(day);
 		case 5 :
@@ -155,6 +157,11 @@ public class Date implements Comparable<Date> {
 
 	public static void setCounter(int counter) {
 		Date.counter = counter;
+		currentDay=findCurrentDay(counter);
+		currentDayName=findCurrentDayName(counter);
+		currentWeek=findCurrentWeek(counter);
+		currentMonth=findCurrentMonth(counter);
+		currentMonthName=findCurrentMonthName(currentMonth);
 	}
 
 	public static int getCurrentMonth() {
@@ -219,6 +226,8 @@ public class Date implements Comparable<Date> {
 	 * @return day of the month
 	 */
 	private static int findCurrentDay(int n){
+		if (n<=0)
+			return n+31;
 		if (n<=30)
 			return n;
 		if (n<=61)
@@ -249,6 +258,8 @@ public class Date implements Comparable<Date> {
 	 * @return day name (Monday...)
 	 */
 	private static String findCurrentDayName(int n){
+		if (n%7<0)
+			return dayNames.get(n%7+7);
 		return dayNames.get(n%7);
 			
 	}
@@ -259,6 +270,8 @@ public class Date implements Comparable<Date> {
 	 * @return a month (int)
 	 */
 	private static int findCurrentMonth(int n){
+		if (n<=0)
+			return 3;
 		if (n<=30)
 			return 4;
 		if (n<=61)

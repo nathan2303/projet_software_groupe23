@@ -35,5 +35,9 @@ public void setDishType(DishType dishType) {
   public double accept(Visitor v){
 	  return v.visit(this);
   }
+  
+  public String toString(){
+	  return this.name + " (" + this.dishType + ")";
+  }
 
 }

@@ -16,6 +16,9 @@ import Users.Restaurant;
 
 public class Order {
 	
+	private int id;
+	private static int counter = 0;
+	
 	private Customer customer;
 	private Restaurant restaurant;
 	private ArrayList<Food> content;
@@ -27,6 +30,8 @@ public class Order {
 	
 
 	public Order() {
+		counter++;
+		this.id=counter;
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -40,26 +45,25 @@ public class Order {
 		this.restaurant = restaurant;
 		this.content = content;
 		this.date = new Date();
-		this.price = computeOrderPrice(content);
-		this.price = this.price * customer.getFidelityCardList().get(restaurant).useCard(this.price);
+		this.price = Math.rint(computeOrderPrice(content)*100)/100;
 		this.profit = this.price*system.getMarkupPercentage()+system.getServiceFee()-system.getDeliveryCost();
+		counter++;
+		this.id=counter;
 	}
 	
 	/**
 	 * computes the price of an order, taking into account discount factors of restaurant (through visitors pattern)
+	 * as well as the existing fidelity card
 	 * @param content
 	 * @return
 	 */
 	public double computeOrderPrice(ArrayList<Food> content){
 		  double res = 0;
-		  System.out.println("coucou3");
-		  System.out.println("");
 		  for (Food f : content){
-			  System.out.println("f"+f);
-			  System.out.println(f.accept(this.restaurant));
 			  res+=f.accept(this.restaurant);
 			  }
-		  return res;
+		  double fidelityDiscount = this.customer.getFidelityCardList().get(this.restaurant).useCard(res);
+		  return res*(fidelityDiscount);
 	}
 	
 	public Courier findCourier(){
@@ -152,6 +156,10 @@ public class Order {
 
 	public void setSystem(MyFoodora system) {
 		this.system = system;
+	}
+	
+	public String toString(){
+		return "\n***** Order no. " + this.id + " *****\nCustomer: " + this.customer + "\nRestaurant: " + this.restaurant + "\nDate: " + this.date + "\nContent: " + this.content + "\nPrice: " + this.price + "€\n****************\n";
 	}
 
 

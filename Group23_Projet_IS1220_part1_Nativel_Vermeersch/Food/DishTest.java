@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 public class DishTest extends TestCase {
 
 	public void testAccept() {
-		Dish Dish1 = new MainDish(1.0, "Spagettis",DishType.Standard);
+		Dish Dish1 = new MainDish(1.0, "Spaghettis",DishType.Standard);
 		Restaurant r1 = new Restaurant("Chez Charbel", "charb", "0000", new Address(4000,5000));
 		
 		assertTrue(Dish1.accept(r1) == 1.0);

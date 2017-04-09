@@ -15,7 +15,7 @@ public abstract class Meal extends Food {
   }
   
   public Meal(ArrayList<Dish> dishes){
-	  super.name = dishes.toString();
+	  super.name = "menu";
 	  this.dishes=dishes;
 	  super.price=computeMealPrice(this.dishes);
 	  this.mealType=findMealType(this.dishes);
@@ -93,8 +93,6 @@ public void setMealType(DishType mealType) {
   protected double computeMealPrice(ArrayList<Dish> dishes){
 	  double res = 0;
 	  for (Dish d : dishes){
-		  System.out.println("loop for in computeMealPrice");
-		  System.out.println("res= "+res);
 		  res+=d.getPrice();
 	  }
 	  return res;
@@ -103,6 +101,10 @@ public void setMealType(DishType mealType) {
   
   public double accept(Visitor v){
 	  return v.visit(this);
+  }
+  
+  public String toString(){
+	  return this.name + " (" + this.mealType + ")" + ": " + this.dishes;
   }
   
   
