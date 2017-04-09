@@ -70,11 +70,18 @@ public class ManagerTest extends TestCase {
 	}
 
 	public void testDetermineMostLessSellingRestaurant() {
-		fail("Not yet implemented");
+		ConfigInitiale.launch();
+		MyFoodora system = MyFoodora.getInstance();
+		Manager manager = system.managersList.get("michou");
+		manager.determineMostLessSellingRestaurant();
+		
 	}
 
 	public void testDetermineMoreLessActiveCourier() {
-		fail("Not yet implemented");
+		ConfigInitiale.launch();
+		MyFoodora system = MyFoodora.getInstance();
+		Manager manager = system.managersList.get("michou");
+		manager.determineMoreLessActiveCourier();
 	}
 
 }

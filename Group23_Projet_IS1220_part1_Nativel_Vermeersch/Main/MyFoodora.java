@@ -2,6 +2,7 @@ package Main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Fidelity.BasicFidelityCard;
 import Food.Order;
 import Policies.DeliveryPolicy;
 import Policies.ProfitPolicy;
@@ -46,8 +47,12 @@ public class MyFoodora {
 		  couriersList.put(u.getUsername(),(Courier)u);
 		  onDutyCouriersList.add((Courier)u);
 	  }
-	  if (u instanceof Restaurant)
+	  if (u instanceof Restaurant){
 		  restaurantsList.put(u.getUsername(),(Restaurant)u);
+		  for(String c : customersList.keySet()){
+			  customersList.get(c).getFidelityCardList().put((Restaurant) u, new BasicFidelityCard((Restaurant) u, customersList.get(c)));
+		  }
+	  }
 	  if (u instanceof Customer)
 		  customersList.put(u.getUsername(),(Customer)u);
 	  if (u instanceof Manager)
