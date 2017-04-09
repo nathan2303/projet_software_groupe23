@@ -31,6 +31,7 @@ public class FastestDelivery implements DeliveryPolicy {
 		Address resAddress = res.getPosition();
 		double resDistance = resAddress.getDistanceTo(restaurantAddress);
 		for (Courier c : list){
+			System.out.println(c.getPosition().getDistanceTo(restaurantAddress));
 			if (c.getPosition().getDistanceTo(restaurantAddress)<resDistance){
 				if (c.decideDelivery()){
 					res=c;
