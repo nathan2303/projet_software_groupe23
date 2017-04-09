@@ -94,7 +94,7 @@ public class Manager extends User {
 					
 		}
 	System.out.println("the most selling restaurant is "+mostRes+" with "+mostSell +"of sells");
-	System.out.println("the most selling restaurant is "+lessRes+" with "+lessSell +" of sells");	
+	System.out.println("the less selling restaurant is "+lessRes+" with "+lessSell +" of sells");	
 	}
 	
 	public void determineMoreLessActiveCourier(){

@@ -39,7 +39,14 @@ public class CustomerTest extends TestCase {
 	}
 
 	public void testUpdate() {
-		fail("Not yet implemented");
+		ConfigInitiale.launch();
+		MyFoodora system=MyFoodora.getInstance();
+		Customer c1 = system.getCustomersList().get("nver");
+		Restaurant r1 = system.getRestaurantsList().get("charb");
+		c1.registerNotifications(r1);
+		c1.update(r1);
+		
+		
 	}
 
 }
