@@ -54,7 +54,5 @@ public class MostOrderedHalfMealTest extends TestCase {
 		mohm.sortOrders(orders);
 		System.out.println("on est arrivé avant derniere ligne");
 		assertTrue(mohm.sortOrders(orders).get(h1) == 2);
-		
 	}
-
 }

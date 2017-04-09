@@ -17,7 +17,7 @@ public class TargetProfit_DeliveryCostTest extends TestCase {
 		MyFoodora system = MyFoodora.getInstance();
 		ConfigInitiale.launch();
 		TargetProfit_DeliveryCost t = new TargetProfit_DeliveryCost(0.1, 1, 1);
-		Customer c1 =system.getCustomersList().get("nver");
+		Customer c1 =system.getCustomersList().get("mdujardin");
 		System.out.println(c1.getName());
 		Order o = new Order();
 		o.setPrice(10);
