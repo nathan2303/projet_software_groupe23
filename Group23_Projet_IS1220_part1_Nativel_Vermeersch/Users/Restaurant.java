@@ -90,7 +90,7 @@ public void addDish(Dish d) {
   }
 
   public void sortShippedOrders(ShippedOrderSortingPolicy sosp) {
-	  TreeMap<Food,Integer> res = sosp.sortOrders(this.shippedOrders);
+	  HashMap<Food,Integer> res = sosp.sortOrders(this.shippedOrders);
 	  System.out.println(res);
   }
   
@@ -135,7 +135,7 @@ public void addDish(Dish d) {
 	  
   }
   
-  	public TreeMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
+  	public HashMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
   		return sosp.sortOrders(this.shippedOrders);
   		
   	}
