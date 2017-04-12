@@ -39,7 +39,10 @@ public boolean equals(Object obj){
 }
 
 
-
+/** computes the price of the dish in the Restaurant v (according to the Visitor pattern)
+ * @param v the Restaurant which has specific discount factors
+ * @return the price of the dish in the Restaurant v
+ */
 public abstract double accept(Visitor v);
 
 }

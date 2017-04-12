@@ -88,11 +88,6 @@ public void addDish(Dish d) {
 	  this.meals.add(m);
 	  this.items.remove(m.getName());
   }
-
-  public void sortShippedOrders(ShippedOrderSortingPolicy sosp) {
-	  HashMap<Food,Integer> res = sosp.sortOrders(this.shippedOrders);
-	  System.out.println(res);
-  }
   
   public void addOrder(Order order){
 	  this.shippedOrders.add(order);
@@ -136,6 +131,8 @@ public void addDish(Dish d) {
   }
   
   	public HashMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
+  		System.out.println("Sorted items (from the least to the most): " + sosp.sortOrders2(this.shippedOrders));
+
   		return sosp.sortOrders(this.shippedOrders);
   		
   	}
