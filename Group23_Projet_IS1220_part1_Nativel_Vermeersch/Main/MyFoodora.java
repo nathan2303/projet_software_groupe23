@@ -87,6 +87,10 @@ public class MyFoodora {
 	  activatedUsersList.remove(u.getUsername());
   }
   
+  /**
+   * adds an order to the history of order of the system
+   * @param order
+   */
   public void addOrder(Order order){
 	  this.completedOrders.add(order);
   }
@@ -213,6 +217,10 @@ public class MyFoodora {
   private MyFoodora(){
   }
   
+  /**
+   * singleton pattern method
+   * @return
+   */
   public static MyFoodora getInstance(){
 	  if (instance == null)
 		  instance = new MyFoodora();
@@ -255,6 +263,10 @@ public class MyFoodora {
 		return profitPolicy;
 	}
 	
+	/**
+	 * this method sets the profit policy but also updates the profit figures (markup etc)
+	 * @param profitPolicy
+	 */
 	public void setProfitPolicy(ProfitPolicy profitPolicy) {
 		this.profitPolicy = profitPolicy;
 		double[] list = this.profitPolicy.computeProfitFigures();

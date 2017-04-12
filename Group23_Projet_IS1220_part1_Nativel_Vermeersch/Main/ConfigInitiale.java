@@ -74,10 +74,11 @@ public class ConfigInitiale  {
 			system.addUser(new Customer(i[0],i[1],i[1].toLowerCase().charAt(0)+i[0].toLowerCase(),"1234"));
 		}
 		// special customer whose birthday is on the 3rd of April 2017
-		system.addUser(new Customer("Delachance","Félicien","fdelachance","1234",new Date(3,4)));
+		system.addUser(new Customer("Delachance","Félicien","fdelachance","1234",new Date(11,4)));
 		// registering some customers to notifications
 		system.getCustomersList().get("hdelalande").registerAllNotifications();
 		system.getCustomersList().get("edelaville").registerAllNotifications();
+		system.getCustomersList().get("fdelachance").registerAllNotifications();
 		
 		// creating new managers
 		system.addUser(new Manager("Gates","Bill", "ceo","123456789"));
@@ -192,10 +193,23 @@ public class ConfigInitiale  {
 			customer1.order(content1, r2);
 			Date.goTomorrow();
 		}
+		ArrayList<Food> content3 = new ArrayList<>();
+		content3.add(maindish2);
+		customer1.order(content3, r2);
+		customer1.order(content3, r2);
+		
+		ArrayList<Food> content4 = new ArrayList<>();
+		content4.add(starter1);
+		customer1.order(content4, r2);
+		
+		ArrayList<Food> content5 = new ArrayList<>();
+		content5.add(starter3);
+		customer1.order(content5, r2);
+		customer1.order(content5, r2);
+		customer1.order(content5, r2);
 		
 		customer2.order(content2, r4);
-	
-		System.out.println(system.getCompletedOrders());
+
 
 		// set date to the 10th of April
 		

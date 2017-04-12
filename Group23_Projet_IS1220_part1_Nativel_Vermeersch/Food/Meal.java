@@ -53,7 +53,7 @@ public void setMealType(DishType mealType) {
    * @return the type of the meal (enum DishType)
    */
   
-  protected DishType findMealType(ArrayList<Dish> dishes){
+  public DishType findMealType(ArrayList<Dish> dishes){
 	  boolean isVegetarian = true;
 	  boolean isGlutenFree = true;
 	  boolean isBoth = true;
@@ -90,7 +90,7 @@ public void setMealType(DishType mealType) {
    * @param dishes
    * @return simply the sum of the prices of the dishes contained in the meal (no reduction yet)
    */
-  protected double computeMealPrice(ArrayList<Dish> dishes){
+  public double computeMealPrice(ArrayList<Dish> dishes){
 	  double res = 0;
 	  for (Dish d : dishes){
 		  res+=d.getPrice();
@@ -98,7 +98,10 @@ public void setMealType(DishType mealType) {
 	  return res;
   }
   
-  
+  /** computes the price of the dish in the Restaurant v (according to the Visitor pattern)
+   * @param v the Restaurant which has specific discount factors
+   * @return the price of the dish in the Restaurant v
+   */
   public double accept(Visitor v){
 	  return v.visit(this);
   }

@@ -154,7 +154,12 @@ public class Date implements Comparable<Date> {
 	public static int getCounter() {
 		return counter;
 	}
-
+	
+	/**
+	 * sets the current day according to the counter (counter 1 = 1st April 2017)
+	 * One may only go from counter = -31 to counter = 244
+	 * @param counter
+	 */
 	public static void setCounter(int counter) {
 		Date.counter = counter;
 		currentDay=findCurrentDay(counter);

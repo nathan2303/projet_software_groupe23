@@ -12,7 +12,7 @@ public BasicFidelityCard(Restaurant restaurant, Customer customer) {
 	}
 
 	/*
- * Si le client possède une carte standard, la réduction sera simplement le spécial discount factor du restaurant
+ * Si le client possède une carte standard, la réduction sera simplement le discount factor du restaurant
  * @see Fidelity.FidelityCard#useCard(double)
  */
 	public  double useCard(double price){

@@ -1,0 +1,1 @@
+There is no my_foodora.ini, instead an initial configuration is launched thanks to ConfigInitiale.launch().
