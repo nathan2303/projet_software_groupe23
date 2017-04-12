@@ -132,6 +132,7 @@ public void addDish(Dish d) {
   
   	public HashMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
   		System.out.println("Sorted items (from the least to the most): " + sosp.sortOrders2(this.shippedOrders));
+
   		return sosp.sortOrders(this.shippedOrders);
   		
   	}
