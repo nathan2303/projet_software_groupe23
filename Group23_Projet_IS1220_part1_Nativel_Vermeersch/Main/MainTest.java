@@ -25,7 +25,7 @@ public class MainTest {
 	}
 	
 	/**
-	 * runs a first command line like test. Fulfils the basic requirements of the program
+	 * runs a first command line like test. Fulfills the basic requirements of the program
 	 * @param args
 	 */
 	public static void main(String[] args) {
