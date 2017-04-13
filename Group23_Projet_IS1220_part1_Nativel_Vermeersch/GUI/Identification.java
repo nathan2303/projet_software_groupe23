@@ -30,7 +30,7 @@ public class Identification implements ActionListener {
 	panel1.add(username);
 	panel1.add(password);
 	panel1.add(identifier);
-	panel1.add(enregistrer)
+	panel1.add(enregistrer);
 	panel1.setSize(320, 160);
 	panel1.setBackground(Color.green);
 	panel1.setBorder(BorderFactory.createTitledBorder("Identification"));
