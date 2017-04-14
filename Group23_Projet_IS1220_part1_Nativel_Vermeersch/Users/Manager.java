@@ -17,6 +17,9 @@ public class Manager extends User {
 		this.name = name;
 		this.surname = surname;
 	}
+	public Manager() {
+		// TODO Auto-generated constructor stub
+	}
 	public void addUser(User u){
 		system.addUser(u);
 	  }
