@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,15 +32,20 @@ public class RestaurantRegistration implements ActionListener{
 	
 	public RestaurantRegistration() {
 		frame.add(panel);
+		frame.setTitle("Enregistrez votre restaurant");
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.pack();
+		
+		frame.setLocationRelativeTo(null);
+		frame.setSize(400, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBackground(Color.blue);
 		panel.add(name);
 		panel.add(username);
 		panel.add(password);
 		panel.add(addressX);
 		panel.add(addressY);
 		panel.add(enregistrer);
+		frame.pack();
 		enregistrer.addActionListener(this);
 		frame.setVisible(true);
 	}

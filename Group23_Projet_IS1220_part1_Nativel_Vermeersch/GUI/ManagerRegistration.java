@@ -24,8 +24,11 @@ public class ManagerRegistration implements ActionListener {
 	
 	public ManagerRegistration() {
 		frame.add(panel);
+		frame.setTitle("entrez vos coordonnées");
+		frame.setLocationRelativeTo(null);
+		frame.setSize(400, 600);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.pack();
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.add(name);
 		panel.add(surname);
@@ -33,6 +36,7 @@ public class ManagerRegistration implements ActionListener {
 		panel.add(password);
 		panel.add(enregistrer);
 		enregistrer.addActionListener(this);
+		frame.pack();
 		frame.setVisible(true);
 		
 	}

@@ -26,12 +26,14 @@ public class Identification implements ActionListener {
 		
 	
 	frame1.add(panel1);
+	frame1.setLocationRelativeTo(null);
+	frame1.setSize(600, 300);
 	panel1.setLayout(new BoxLayout(panel1, BoxLayout.PAGE_AXIS));
 	panel1.add(username);
 	panel1.add(password);
 	panel1.add(identifier);
 	panel1.add(enregistrer);
-	panel1.setSize(320, 160);
+	
 	panel1.setBackground(Color.green);
 	panel1.setBorder(BorderFactory.createTitledBorder("Identification"));
 	frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

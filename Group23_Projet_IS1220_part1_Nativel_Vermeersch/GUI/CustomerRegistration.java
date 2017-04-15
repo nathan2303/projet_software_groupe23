@@ -32,8 +32,11 @@ public class CustomerRegistration implements ActionListener {
 	
 	public CustomerRegistration(){
 		frame.add(panel);
+		frame.setLocation(0, 0);
+		frame.setSize(400, 800);
+		frame.setTitle("entrez vos coordonnées");
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.pack();
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.add(name);
 		panel.add(surname);
@@ -45,6 +48,7 @@ public class CustomerRegistration implements ActionListener {
 		panel.add(phonenumber);
 		panel.add(enregistrer);
 		enregistrer.addActionListener(this);
+		frame.pack();
 		frame.setVisible(true);
 	}
 	

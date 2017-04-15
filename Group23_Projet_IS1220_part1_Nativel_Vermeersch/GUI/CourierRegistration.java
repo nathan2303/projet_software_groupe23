@@ -31,8 +31,11 @@ public class CourierRegistration implements ActionListener{
 	
 	public CourierRegistration() {
 		frame.add(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setSize(400, 400);
+		frame.setTitle("entrez vos coordonnées");
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.pack();
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.add(name);
 		panel.add(surname);
@@ -43,6 +46,7 @@ public class CourierRegistration implements ActionListener{
 		panel.add(phone);
 		panel.add(enregistrer);
 		enregistrer.addActionListener(this);
+		frame.pack();
 		frame.setVisible(true);
 	}
 	

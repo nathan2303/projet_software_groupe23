@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -29,8 +30,12 @@ public class Registration implements ActionListener{
 	public Registration(){
 		frame.add(usertype);
 		usertype.add(user);
+		usertype.add(ok);
+		usertype.setBorder(BorderFactory.createTitledBorder("Vous êtes un"));
 		frame.pack();
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setSize(600, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		usertype.setMaximumSize(new Dimension(420, 320));
 		usertype.setBackground(Color.blue);
@@ -45,18 +50,18 @@ public class Registration implements ActionListener{
 			new RestaurantRegistration();
 			break;
 		case 1:
-			Manager m = new Manager();
-			system.addUser(m);
+			frame.setVisible(false);
+			new ManagerRegistration();
 			break;
 			
 		case 2:
-			Customer c = new Customer();
-			system.addUser(c);
+			frame.setVisible(false);
+			new CustomerRegistration();
 			break;
 			
 		case 3:
-			Courier co = new Courier();
-			system.addUser(co);
+			frame.setVisible(false);;
+			new CourierRegistration();
 			break;
 		
 		}
