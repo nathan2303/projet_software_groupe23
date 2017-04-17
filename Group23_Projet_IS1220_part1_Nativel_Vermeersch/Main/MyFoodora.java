@@ -34,9 +34,18 @@ public class MyFoodora {
   private DeliveryPolicy deliveryPolicy;
   private ProfitPolicy profitPolicy;
   private static MyFoodora instance = null;
+  private User connectedUser;
   
   
-  /**
+  public User getConnectedUser() {
+	return connectedUser;
+}
+
+public void setConnectedUser(User connectedUser) {
+	this.connectedUser = connectedUser;
+}
+
+/**
    * enables the manager to add users (they're activated by default)
    * @param u the user to be added
    */

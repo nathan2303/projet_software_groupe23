@@ -26,15 +26,15 @@ public class MostOrderedHalfMeal implements ShippedOrderSortingPolicy {
 			
 			for (Food food : list){
 				if (food instanceof HalfMeal){
-				System.out.println("j'arrive là");	
+				
 					
 					if (res.containsKey(food)){
-						System.out.println("et là");
+						
 						res.put(food, res.get(food) + 1);
 					}
 					else
 						res.put(food, 1);
-			System.out.println("mais j'arrive là");		
+			
 				}
 				
 			}			

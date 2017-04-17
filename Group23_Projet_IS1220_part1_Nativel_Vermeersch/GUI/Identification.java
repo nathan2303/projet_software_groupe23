@@ -54,6 +54,7 @@ public class Identification implements ActionListener {
 		if (system.getUsersList().containsKey(user)){
 			if(system.getUsersList().get(user).getPassword() == pass){
 				System.out.println("bonjour" + user);
+				system.setConnectedUser(system.getUsersList().get(user));
 				
 				
 		}
