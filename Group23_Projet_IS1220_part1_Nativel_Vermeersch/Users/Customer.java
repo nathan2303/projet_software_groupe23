@@ -150,11 +150,15 @@ public class Customer extends User implements Observer {
 	}
 	
 	public void update(Restaurant r) {
-		  System.out.println("Customer " + this.surname + " "+ this.name + "has received the promotional offer from " + r.getName());
+		  System.out.println("Customer " + this.surname + " "+ this.name + " has received the promotional offer from " + r.getName());
 		  System.out.println(r.getGenericDiscountFactor() + " discount for the all the meals!");
 		  System.out.println(r.getSpecialDiscountFactor() + " discount for the meals of the week!");
 		  System.out.println("The new meals of the week: " + r.getMealsOfTheWeek().toString());
 	  }
+	
+	public void updateBirthday(Restaurant r){
+		System.out.println("Customer "+this+" has received an offer for his/her birthday from "+r+"!");
+	}
 	
 	public Address getAddress() {
 		return address;
@@ -242,6 +246,16 @@ public class Customer extends User implements Observer {
 		
 	}
 	
+	
+	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	public String toString(){
 		return this.surname + " " + this.name;
 	}

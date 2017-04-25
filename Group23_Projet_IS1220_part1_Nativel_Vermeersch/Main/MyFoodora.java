@@ -33,7 +33,9 @@ public class MyFoodora {
   private ArrayList<Order> completedOrders = new ArrayList<Order>();
   private DeliveryPolicy deliveryPolicy;
   private ProfitPolicy profitPolicy;
+  private User loggedOnUser = null;
   private static MyFoodora instance = null;
+  
   
   
   /**
@@ -340,6 +342,14 @@ public class MyFoodora {
 
 	public void setDeliveryCost(double deliveryCost) {
 		this.deliveryCost = deliveryCost;
+	}
+
+	public User getLoggedOnUser() {
+		return loggedOnUser;
+	}
+
+	public void setLoggedOnUser(User loggedOnUser) {
+		this.loggedOnUser = loggedOnUser;
 	}
 
 	public static void main(String[] args) {
