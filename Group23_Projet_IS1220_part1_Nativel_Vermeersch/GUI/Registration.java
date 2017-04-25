@@ -29,6 +29,7 @@ public class Registration implements ActionListener{
 	public Registration(){
 		frame.add(usertype);
 		usertype.add(user);
+		usertype.add(ok);
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,18 +46,18 @@ public class Registration implements ActionListener{
 			new RestaurantRegistration();
 			break;
 		case 1:
-			Manager m = new Manager();
-			system.addUser(m);
+			frame.setVisible(false);
+			new ManagerRegistration();
 			break;
 			
 		case 2:
-			Customer c = new Customer();
-			system.addUser(c);
+			frame.setVisible(false);
+			new CustomerRegistration();
 			break;
 			
 		case 3:
-			Courier co = new Courier();
-			system.addUser(co);
+			frame.setVisible(false);
+			new CourierRegistration();
 			break;
 		
 		}

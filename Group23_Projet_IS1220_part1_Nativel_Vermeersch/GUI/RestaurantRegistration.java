@@ -31,7 +31,7 @@ public class RestaurantRegistration implements ActionListener{
 	public RestaurantRegistration() {
 		frame.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.pack();
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel.add(name);
 		panel.add(username);
@@ -40,6 +40,7 @@ public class RestaurantRegistration implements ActionListener{
 		panel.add(addressY);
 		panel.add(enregistrer);
 		enregistrer.addActionListener(this);
+		frame.pack();
 		frame.setVisible(true);
 	}
 	public void actionPerformed(ActionEvent e){
@@ -61,5 +62,9 @@ public class RestaurantRegistration implements ActionListener{
 		}
 		
 		
+	}
+	
+	public static void main(String[] args) {
+		new RestaurantRegistration();
 	}
 }

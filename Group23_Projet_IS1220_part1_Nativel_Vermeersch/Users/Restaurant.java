@@ -8,6 +8,7 @@ import Food.Dish;
 import Food.Food;
 import Food.Meal;
 import Food.Order;
+import Main.Date;
 import Policies.ShippedOrderSortingPolicy;
 
 public class Restaurant extends User implements Visitor, Observable {
@@ -121,6 +122,15 @@ public void addDish(Dish d) {
 	  if (registeredCustomersForNotifications.contains(o))
 		  registeredCustomersForNotifications.remove(o);
 	  
+  }
+  
+  public void updateChangeDate(){
+	  for (Observer o : this.registeredCustomersForNotifications){
+		  Customer c = (Customer)o;
+		  if (c.getBirthday().compareTo(new Date())==0)
+			  c.updateBirthday(this);
+		  
+	  }
   }
   
   public void notifyObservers(){
