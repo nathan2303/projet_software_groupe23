@@ -4,11 +4,11 @@ import Main.MyFoodora;
 
 public abstract class User {
 
-  public int id;
+  protected int id;
 
-  public String username;
+  protected String username;
 
-  public String password;
+  protected String password;
   
   private static int Counter = 0;
   

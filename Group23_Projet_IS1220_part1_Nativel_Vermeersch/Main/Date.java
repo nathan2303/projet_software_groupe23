@@ -2,6 +2,8 @@ package Main;
 
 import java.util.HashMap;
 
+import Users.Restaurant;
+
 /**
  * the class for setting and getting the date. Begins on Saturday 1st April 2017.
  * We consider that all months have 30 days (for the sake of simplicity)
@@ -27,6 +29,7 @@ public class Date implements Comparable<Date> {
 	private static int currentYear = 2017;
 	private static HashMap<Integer, String> dayNames = createHashMapDay();
 	private static HashMap<Integer, String> monthNames = createHashMapMonth();
+	private static MyFoodora system = MyFoodora.getInstance();
 
 	/**
 	 * instance of date, which is used for history purposes
@@ -63,6 +66,7 @@ public class Date implements Comparable<Date> {
 		currentWeek=findCurrentWeek(counter);
 		currentMonth=findCurrentMonth(counter);
 		currentMonthName=findCurrentMonthName(currentMonth);
+		notifyChangeDate();
 	}
 	/**
 	 * advance of a number of days (static)
@@ -75,8 +79,14 @@ public class Date implements Comparable<Date> {
 		currentWeek=findCurrentWeek(counter);
 		currentMonth=findCurrentMonth(counter);
 		currentMonthName=findCurrentMonthName(currentMonth);
+		notifyChangeDate();
 	}
 	
+	public static void notifyChangeDate(){
+		for (Restaurant r : system.getRestaurantsList().values())
+			r.updateChangeDate();
+			
+	}
 	public int findCounter(int day, int month){
 		switch (month){
 		case 3 :
@@ -154,7 +164,12 @@ public class Date implements Comparable<Date> {
 	public static int getCounter() {
 		return counter;
 	}
-
+	
+	/**
+	 * sets the current day according to the counter (counter 1 = 1st April 2017)
+	 * One may only go from counter = -31 to counter = 244
+	 * @param counter
+	 */
 	public static void setCounter(int counter) {
 		Date.counter = counter;
 		currentDay=findCurrentDay(counter);

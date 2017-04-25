@@ -4,7 +4,7 @@ package GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,7 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Main.ConfigInitiale;
 import Main.MyFoodora;
+import Users.User;
 
 public class Identification implements ActionListener {
 	JFrame  frame1 = new JFrame("test");
@@ -33,13 +35,15 @@ public class Identification implements ActionListener {
 	panel1.add(password);
 	panel1.add(identifier);
 	panel1.add(enregistrer);
-	
 	panel1.setBackground(Color.green);
+	panel1.setSize(320, 160);
+	panel1.setBackground(Color.GREEN);
 	panel1.setBorder(BorderFactory.createTitledBorder("Identification"));
 	frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame1.pack();
 	System.out.println("Hi I'm there");
 	frame1.setVisible(true);
+	frame1.setLocationRelativeTo(null);
 	identifier.addActionListener(this);
 	enregistrer.addActionListener(new EnregistrerListener());
 		}
@@ -47,17 +51,17 @@ public class Identification implements ActionListener {
 
 	public  void actionPerformed(ActionEvent e){
 		
-		String user = username.getText();
-		String pass = password.getText();
+		String typedUsername = username.getText();
+		String typedPassword = password.getText();
 		System.out.println("actionperformed is called");
 		MyFoodora system = MyFoodora.getInstance();
-		if (system.getUsersList().containsKey(user)){
-			if(system.getUsersList().get(user).getPassword() == pass){
-				System.out.println("bonjour" + user);
-				system.setConnectedUser(system.getUsersList().get(user));
+		HashMap<String, User> list = system.getUsersList();
+		if (list.containsKey(typedUsername) && list.get(typedUsername).getPassword().equals(typedPassword)){
+			User user = list.get(typedUsername);
+			System.out.println("Bonjour " + user);
+			system.setConnectedUser(system.getUsersList().get(user));
 				
 				
-		}
 		}
 		else{
 				System.out.println("erreur d'identification");
@@ -71,6 +75,7 @@ public class Identification implements ActionListener {
 
 	
 	public static void main(String[] args) {
+		ConfigInitiale.launch();
 		new Identification();
 		System.out.println("Hi I'm here");
 		

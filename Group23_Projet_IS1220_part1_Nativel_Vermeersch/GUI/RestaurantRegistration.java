@@ -47,6 +47,7 @@ public class RestaurantRegistration implements ActionListener{
 		panel.add(enregistrer);
 		frame.pack();
 		enregistrer.addActionListener(this);
+		frame.pack();
 		frame.setVisible(true);
 	}
 	public void actionPerformed(ActionEvent e){
@@ -68,5 +69,9 @@ public class RestaurantRegistration implements ActionListener{
 		}
 		
 		
+	}
+	
+	public static void main(String[] args) {
+		new RestaurantRegistration();
 	}
 }

@@ -60,7 +60,9 @@ public class CustomerRegistration implements ActionListener {
 		if (system.getUsersList().containsKey(username.getText()) == false){
 			system.addUser(c);
 			frame.setVisible(false);
-			new Identification();}
+			new Identification();
+			
+			}
 		
 		else{
 			JDialog dialog = new JDialog();
@@ -68,6 +70,11 @@ public class CustomerRegistration implements ActionListener {
 			dialog.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 			dialog.setVisible(true);
 		}
+	}
+	
+	public static void main(String[] args) {
+		new CustomerRegistration();
+		
 	}
 
 }

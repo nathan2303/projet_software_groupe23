@@ -40,7 +40,6 @@ public class Order {
 	
 	public Order(Customer customer, Restaurant restaurant, ArrayList<Food> content) {
 		super();
-		System.out.println("order created");
 		this.customer = customer;
 		this.restaurant = restaurant;
 		this.content = content;
@@ -66,6 +65,10 @@ public class Order {
 		  return res*(fidelityDiscount);
 	}
 	
+	/**
+	 * finds the courier according to the current delivery policy
+	 * @return a courier or null if there is no available courier
+	 */
 	public Courier findCourier(){
 		Courier res = system.getDeliveryPolicy().findCourier(this);
 		this.courier = res;
