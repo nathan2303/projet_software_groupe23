@@ -4,11 +4,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Food.Dessert;
+import Food.Dish;
 import Food.DishType;
 import Food.Food;
+import Food.FullMeal;
+import Food.HalfMeal;
+import Food.InvalidFullMealException;
+import Food.InvalidHalfMealException;
 import Food.MainDish;
 import Food.Meal;
 import Food.Starter;
+import Policies.FairOccupationDelivery;
+import Policies.FastestDelivery;
+import Policies.TargetProfit_DeliveryCost;
+import Policies.TargetProfit_Markup;
+import Policies.TargetProfit_ServiceFee;
 import Users.Address;
 import Users.Courier;
 import Users.Customer;
@@ -244,17 +254,95 @@ public class MainTest {
 							Courier c5 = new Courier(command[2],command[1],command[3],command[5]);
 							manager.addUser(c5);
 							break;
+						case "setDeliveryPolicy":
+							switch(command[1].toLowerCase()){
+							case "fairoccupationdelivery":
+								system.setDeliveryPolicy(new FairOccupationDelivery());
+								break;
+							case "fastestdelivery":
+								system.setDeliveryPolicy(new FastestDelivery());
+								break;
+							default:
+								System.out.println("You entered a wrong command.");
+							}
+						case "setProfitPolicy":
+							try{
+							switch(command[1].toLowerCase()){
+							case "targetprofit_deliverycost":
+								system.setProfitPolicy(new TargetProfit_DeliveryCost(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4])));
+								break;
+							case "targetprofit_markup":
+								system.setProfitPolicy(new TargetProfit_Markup(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4])));
+								break;
+							case "targetprofit_servicefee":
+								system.setProfitPolicy(new TargetProfit_ServiceFee(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4])));
+								break;
+							default:
+								System.out.println("You entered a wrong command.");
+							}}
+							catch(Exception e){
+								System.out.println(e.getMessage());
+								System.out.println("You entered a wrong command.");
+							}
+						case "associateCard":
+							try{
+							switch(command[2].toLowerCase()){
+							case "basicfidelitycard":
+								system.getCustomersList().get(command[1]).unregisterFidelityCard(system.getRestaurantsList().get(command[3]));
+								break;
+							case "pointfidelitycard":
+								system.getCustomersList().get(command[1]).registerPointFidelityCard(system.getRestaurantsList().get(command[3]));
+								break;
+							case "lotteryfidelitycard":
+								system.getCustomersList().get(command[1]).registerLotteryFidelityCard(system.getRestaurantsList().get(command[3]));
+								break;
+							default:
+								System.out.println("You entered a wrong command.");
+							}}
+							catch(Exception e){
+								System.out.println(e.getMessage());
+								System.out.println("You entered a wrong command.");
+							}
+							
 						case "goTomorrow":
 							Date.goTomorrow();
 							System.out.println("Good morning! We are on " + new Date());
 							break;
 						case "showTotalProfit":
-							System.out.println("Total profit: " + manager.computeTotalProfit());
+							try{
+								String[] date1_string = command[1].split("/");
+								Date date1 = new Date(Integer.parseInt(date1_string[0]), Integer.parseInt(date1_string[1]));
+								String[] date2_string = command[2].split("/");
+								Date date2 = new Date(Integer.parseInt(date2_string[0]), Integer.parseInt(date2_string[1]));
+								System.out.println("Total profit from " + date1 + " to " + date2 + ": " + manager.computeProfit(date1, date2));
+							}
+							catch(Exception e){
+								System.out.println("Total profit: " + manager.computeTotalProfit());
+							}
+							
+							break;
+						case "showCourierDeliveries":
+							manager.determineMostLessActiveCourier();
+							break;
+						case "showRestaurantTop":
+							manager.determineMostLessSellingRestaurant();
+							break;
+						case "showCustomers":
+							System.out.println("\nLIST OF REGISTERED CUSTOMERS");
+							System.out.println(system.getCustomersList());
+							System.out.println("---------------");
+							break;
+						case "showMenuItem":
+							Restaurant current_restaurant = system.getRestaurantsList().get(command[1]);
+							System.out.println("\nMENU OF THE RESTAURANT " + current_restaurant);
+							System.out.println(current_restaurant.getItems().values()+"\n");
+							System.out.println("---------------");
+							break;
 						case "help":
 							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant, goTomorrow");
 							break;
 						default:
-							System.out.println("You entered a wrong command. Please use 'help'");
+							System.out.println("You entered a wrong command. Please use 'help'.");
 							break;
 						
 						}
@@ -320,7 +408,7 @@ public class MainTest {
 						case "addDishRestaurantMenu":
 							switch(command[2].toLowerCase()){
 							case "starter":
-								Starter starter = new Starter(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3]));
+								Starter starter = new Starter(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3].toUpperCase().charAt(0)+command[3].toLowerCase().substring(1, command[3].length())));
 								restaurant.addDish(starter);
 								break;
 							case "main":
@@ -337,6 +425,63 @@ public class MainTest {
 							break;
 						case "createMeal":
 							System.out.println("Interface not yet implemented. Please try later (part 2).");
+							String mealName = null;
+							try{
+								mealName = command[1];
+							}
+							catch(Exception e){
+								System.out.println("ERROR!");
+								System.out.println("Please enter a one-word meal name after the command 'createMeal'.");
+								break;
+							}
+							boolean creatingMeal = true;
+							ArrayList<Dish> dishList = new ArrayList<>();
+							while (creatingMeal){
+								String[] commandMeal = in.nextLine().split(" ");
+								switch(commandMeal[0]){
+								case "addDish2Meal":
+									command2 = commandMeal[1];
+									for (int i=2;i<=command.length;i++){
+										command2+=" " + commandMeal[i];
+										}
+									dishList.add((Dish)restaurant.getItems().get(command2));
+									break;
+								case "showMeal":
+									System.out.println(dishList);
+									break;
+								case "saveMeal":
+									creatingMeal=false;
+									switch(dishList.size()){
+									case(3):
+										try{
+											restaurant.addMeal(new FullMeal(mealName, dishList));
+										}
+										catch(InvalidFullMealException e){
+											System.out.println("ERROR!");
+											System.out.println(e.getMessage());
+										}
+										
+										break;
+									case(2):
+										try{
+											restaurant.addMeal(new HalfMeal(mealName, dishList));
+										}
+										catch(InvalidHalfMealException e){
+											System.out.println("ERROR!");
+											System.out.println(e.getMessage());
+										}
+										
+										break;
+									default:
+										System.out.println("ERROR!");
+										System.out.println("You entered a wrong number of dishes in your meal ");
+										break;
+									}
+								break;
+									
+								}
+							}
+							
 							break;
 						case "setSpecialOffer":
 							command2 = command[1];
@@ -352,11 +497,14 @@ public class MainTest {
 								}
 							restaurant.removeMealOfTheWeek((Meal)restaurant.getItems().get(command2));
 							break;
+						case "showSpecialOffer":
+							System.out.println(restaurant.getMealsOfTheWeek());
+							break;
 						case "help":
-							System.out.println("Available commands for a customer:");
+							System.out.println("Available commands for a restaurant:");
 							System.out.println("logout");
 							System.out.println("addDishRestaurantMenu <dishName> <dishCategory> <foodCategory> <unitPrice>");
-							System.out.println("createMeal");
+							System.out.println("createMeal<mealName>");
 							System.out.println("setSpecialOffer <mealName>, removeSpecialOffer <mealName>");
 							break;
 						default:
