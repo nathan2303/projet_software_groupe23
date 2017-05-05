@@ -211,7 +211,7 @@ public void setConnectedUser(User connectedUser) {
 	  double res = 0;
 	  for (Order o : this.completedOrders){
 		  if (o.getDate().compareTo(start)>=0 && o.getDate().compareTo(end)<=0)
-			  res+=o.getPrice()*this.markupPercentage+this.serviceFee-this.deliveryCost;
+			  res+=o.getProfit();
 	  }
 	  return res;
   }
@@ -219,7 +219,7 @@ public void setConnectedUser(User connectedUser) {
   public double computeTotalProfit(){
 	  double res = 0;
 	  for (Order o : this.completedOrders){
-		  res+=o.getPrice()*this.markupPercentage+this.serviceFee-this.deliveryCost;
+		  res+=o.getProfit();
 	  }
 	  return res;
   }

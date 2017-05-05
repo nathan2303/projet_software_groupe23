@@ -1,6 +1,11 @@
 package Main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import Food.Dessert;
@@ -28,17 +33,24 @@ import Users.User;
 
 public class MainTest {
 	
-	
 
 	public MainTest() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * runs a first command line like test. Fulfills the basic requirements of the program
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	public static LinkedList<String> checkInbox(Customer customer){
+		LinkedList<String> inbox = customer.getInbox();
+		if(inbox.isEmpty()){
+			System.out.println("Your inbox is empty!");
+			return null;
+		}
+		else{
+			System.out.println("You have " + inbox.size() + " unread messages. Please use 'readInbox' to check them.");
+			return inbox;
+		}
+	}
+	
+	public static void executeCLUI(){
 		Scanner in = new Scanner(System.in);
 		MyFoodora system = MyFoodora.getInstance();
 		ConfigInitiale.launch();
@@ -46,11 +58,34 @@ public class MainTest {
 		System.out.println("Welcome to MyFoodora! We are on " + new Date() +".");
 		String[] command;
 		String command2;
+		String username;
+		String password;
+		double x;
+		double y;
 		while (running){
-			System.out.println("You are on the home page. Do you already have an account?");
-			System.out.println("1 - Yes / 2 - No");
-			int hasAccount = in.nextInt();
-			if (hasAccount == 2){
+			System.out.println("You are on the home page. Please enter a command. We are on " + new Date() +".");
+			command = in.nextLine().split(" ");
+			switch(command[0]){
+			case "goTomorrow":
+				Date.goTomorrow();
+				System.out.println("Good morning! We are on " + new Date());
+				break;
+			
+			case "exit":
+				running = false;
+				System.out.println("Good-bye!");
+				in.close();
+				break;
+			case "runTest":
+				try{
+					MainTest.executeScenario(command[1]);
+				}
+				catch(Exception e){
+					System.out.println("There was a problem with the scenario text file. Sorry!");
+				}
+				break;
+				
+			case "createAccount":
 				System.out.println("We will create your account. Please complete the fields below.");
 				System.out.println("Enter your family name.");
 				in.nextLine();
@@ -58,13 +93,13 @@ public class MainTest {
 				System.out.println("Enter your surname.");
 				String surname = in.nextLine();
 				System.out.println("Enter your username.");
-				String username = in.nextLine();
+				username = in.nextLine();
 				while (system.getUsersList().containsKey(username)){
 					System.out.println("Username already taken. Enter another username.");
 					username = in.nextLine();
 				}
 				System.out.println("Enter your password.");
-				String password = in.nextLine();
+				password = in.nextLine();
 				System.out.println("Are you: 1. a manager? 2. a customer? 3. a restaurant? 4. a courier?");
 				switch(in.nextInt()){
 				case 1:
@@ -79,9 +114,9 @@ public class MainTest {
 					break;
 				case 2:
 					System.out.println("Enter your address x position");
-					double x = in.nextDouble();
+					x = in.nextDouble();
 					System.out.println("Enter your address y position");
-					double y = in.nextDouble();
+					y = in.nextDouble();
 					Address adress = new Address(x,y);
 					System.out.println("Enter your email adress");
 					in.nextLine();
@@ -152,21 +187,18 @@ public class MainTest {
 					break;				
 				}
 				
-				
-				
-			}
-			if (hasAccount == 1){
+				break;
+			case "login":
 				System.out.println("We're glad you're back! Please enter your identifiers below.");
 				System.out.println("Enter your username.");
-				in.nextLine();
-				String username = in.nextLine();
+				username = in.nextLine();
 				while (!system.getUsersList().containsKey(username)){
 					System.out.println("Username does not exist. Enter another username.");
 					username = in.nextLine();
 				}
 				User user = system.getUsersList().get(username);
 				System.out.println("Enter your password.");
-				String password = in.nextLine();
+				password = in.nextLine();
 				while (!password.equals(user.getPassword())){
 					System.out.println("Your username and your password do not match. Please enter your password again.");
 					password = in.nextLine();
@@ -176,17 +208,20 @@ public class MainTest {
 				if (!system.getActivatedUsersList().containsKey(username)){
 					System.out.println("Sorry, your account has been deactivated. Please contact a manager to get further help.");
 					connected = false;
+				
 				}
+
 
 				if (user instanceof Manager){
 					Manager manager = (Manager)user;
-					System.out.println("Welcome "+manager.getSurname()+" "+manager.getName()+"!");
+					System.out.println("\n--------------NEW MANAGER SESSION--------------\n"+"Welcome "+manager.getSurname()+" "+manager.getName()+"! You are a manager.");
 					while (connected){
 						System.out.println("Enter a command.");
 						command = in.nextLine().split(" ");
 						switch(command[0]){
 						case "logout":
 							connected = false;
+							System.out.println("\n--------------MANAGER SESSION CLOSED--------------\n");
 							break;
 						case "show":
 							switch(command[1].toLowerCase()){
@@ -237,33 +272,54 @@ public class MainTest {
 							}
 							break;
 						case "registerRestaurant":
-							double x = Integer.parseInt(command[2].split(",")[0]);
-							double y = Integer.parseInt(command[2].split(",")[1]);
+							try{
+							x = Integer.parseInt(command[2].split(",")[0]);
+							y = Integer.parseInt(command[2].split(",")[1]);
 							Restaurant r4 = new Restaurant(command[1],command[3],command[4],new Address(x,y));
 							manager.addUser(r4);
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Please remember to put the arguments in the appropriate order.");
+							}
 							break;
 						case "registerCustomer":
+							try{
 							x = Integer.parseInt(command[4].split(",")[0]);
 							y = Integer.parseInt(command[4].split(",")[1]);
 							Customer c4 = new Customer(command[2],command[1],command[3],command[5]);
 							manager.addUser(c4);
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Please remember to put the arguments in the appropriate order.");
+							}
 							break;
 						case "registerCourier":
+							try{
 							x = Integer.parseInt(command[4].split(",")[0]);
 							y = Integer.parseInt(command[4].split(",")[1]);
 							Courier c5 = new Courier(command[2],command[1],command[3],command[5]);
 							manager.addUser(c5);
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Please remember to put the arguments in the appropriate order.");
+							}
 							break;
 						case "setDeliveryPolicy":
-							switch(command[1].toLowerCase()){
-							case "fairoccupationdelivery":
-								system.setDeliveryPolicy(new FairOccupationDelivery());
-								break;
-							case "fastestdelivery":
-								system.setDeliveryPolicy(new FastestDelivery());
-								break;
-							default:
-								System.out.println("You entered a wrong command.");
+							try{
+								switch(command[1].toLowerCase()){
+								case "fairoccupationdelivery":
+									system.setDeliveryPolicy(new FairOccupationDelivery());
+									break;
+								case "fastestdelivery":
+									system.setDeliveryPolicy(new FastestDelivery());
+									break;
+								default:
+									System.out.println("You entered a wrong command.");
+								}
+							}
+							catch(Exception e){
+								System.out.println(e.getMessage());
+								System.out.println("You entered a wrong command. Please specify the name of the policy.");
 							}
 						case "setProfitPolicy":
 							try{
@@ -278,11 +334,11 @@ public class MainTest {
 								system.setProfitPolicy(new TargetProfit_ServiceFee(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[4])));
 								break;
 							default:
-								System.out.println("You entered a wrong command.");
+								System.out.println("You entered a wrong command. ");
 							}}
 							catch(Exception e){
 								System.out.println(e.getMessage());
-								System.out.println("You entered a wrong command.");
+								System.out.println("You entered a wrong command. Please specify the name of the policy.");
 							}
 						case "associateCard":
 							try{
@@ -339,7 +395,13 @@ public class MainTest {
 							System.out.println("---------------");
 							break;
 						case "help":
-							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant, goTomorrow");
+							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant");
+							System.out.println("showTotalProfit");
+							System.out.println("showTotalProfit <startDate> <endDate>");
+							System.out.println("showCustomers");
+							System.out.println("showMenuItem");
+							System.out.println("CourierDeliveries");
+							System.out.println("RestaurantTop");
 							break;
 						default:
 							System.out.println("You entered a wrong command. Please use 'help'.");
@@ -350,15 +412,28 @@ public class MainTest {
 				}
 				if (user instanceof Customer){
 					Customer customer = (Customer)user;
-					System.out.println("Welcome "+customer.getSurname()+" "+customer.getName()+"!");
-					System.out.println("Here is the list of restaurants.");
+					System.out.println("\n--------------NEW CUSTOMER SESSION--------------\nWelcome "+customer.getSurname()+" "+customer.getName()+"!");
+					System.out.println("\nHere is the list of restaurants.");
 					System.out.println(system.getRestaurantsList());
+					System.out.println();
+					LinkedList<String> inbox = MainTest.checkInbox(customer);
 					while (connected){
 						System.out.println("Enter a command.");
 						command = in.nextLine().split(" ");
 						switch(command[0]){
 						case "logout":
 							connected = false;
+							System.out.println("\n--------------CUSTOMER SESSION CLOSED--------------\n");
+							break;
+						case "readInbox":
+							if(inbox == null)
+								System.out.println("You don't have any unread messages!");
+							else{
+								while(!inbox.isEmpty()){
+									System.out.println(inbox.pop());
+								}
+								System.out.println("This was your last unread message for today.");
+							}
 							break;
 						case "createOrder":
 							Restaurant restaurant = system.getRestaurantsList().get(command[1]);
@@ -395,7 +470,7 @@ public class MainTest {
 				}	
 				if (user instanceof Restaurant){
 					Restaurant restaurant = (Restaurant)user;
-					System.out.println("Welcome "+restaurant.getName()+"! Here is your menu:");
+					System.out.println("\n--------------NEW RESTAURANT SESSION--------------\n"+"Welcome "+restaurant.getName()+"! Here is your menu:");
 					System.out.println(restaurant.getDishes());
 					System.out.println(restaurant.getMeals());
 					while (connected){
@@ -404,8 +479,10 @@ public class MainTest {
 						switch(command[0]){
 						case "logout":
 							connected = false;
+							System.out.println("\n--------------RESTAURANT SESSION CLOSED--------------\n");
 							break;
 						case "addDishRestaurantMenu":
+							try{
 							switch(command[2].toLowerCase()){
 							case "starter":
 								Starter starter = new Starter(Double.parseDouble(command[4]), command[1], DishType.valueOf(command[3].toUpperCase().charAt(0)+command[3].toLowerCase().substring(1, command[3].length())));
@@ -422,6 +499,10 @@ public class MainTest {
 							default:
 								System.out.println("Please enter one of the following food categories: starter, main or dessert.");
 						}
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Remember to type the arguments in the appropriate order.");
+							}
 							break;
 						case "createMeal":
 							System.out.println("Interface not yet implemented. Please try later (part 2).");
@@ -477,25 +558,43 @@ public class MainTest {
 										System.out.println("You entered a wrong number of dishes in your meal ");
 										break;
 									}
-								break;
-									
+									break;
+								case "help":
+									System.out.println("Available commands:");
+									System.out.println("addDish2Meal <dishName>");
+									System.out.println("showMeal");
+									System.out.println("saveMeal");
+									break;
+								default:
+									System.out.println("You entered a wrong command. Please use 'help'.");
+									break;
 								}
 							}
 							
 							break;
 						case "setSpecialOffer":
+							try{
 							command2 = command[1];
 							for (int i=2;i<command.length;i++){
 								command2+=" " + command[i];
 								}
 							restaurant.addMealOfTheWeek((Meal)restaurant.getItems().get(command2));
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Remember to put the name of the meal you want to put in the special offers.");
+							}
 							break;
 						case "removeFromSpecialOffer":
 							command2 = command[1];
-							for (int i=2;i<command.length;i++){
-								command2+=" " + command[i];
-								}
-							restaurant.removeMealOfTheWeek((Meal)restaurant.getItems().get(command2));
+							try{
+								for (int i=2;i<command.length;i++){
+									command2+=" " + command[i];
+									}
+								restaurant.removeMealOfTheWeek((Meal)restaurant.getItems().get(command2));
+							}
+							catch(Exception e){
+								System.out.println("You entered a wrong command. Remember to put the name of the meal you want to remove from the special offers.");
+							}
 							break;
 						case "showSpecialOffer":
 							System.out.println(restaurant.getMealsOfTheWeek());
@@ -505,7 +604,7 @@ public class MainTest {
 							System.out.println("logout");
 							System.out.println("addDishRestaurantMenu <dishName> <dishCategory> <foodCategory> <unitPrice>");
 							System.out.println("createMeal<mealName>");
-							System.out.println("setSpecialOffer <mealName>, removeSpecialOffer <mealName>");
+							System.out.println("setSpecialOffer <mealName>, removeSpecialOffer <mealName>, showSpecialOffer");
 							break;
 						default:
 							System.out.println("You entered a wrong command. Please use the command 'help'.");
@@ -515,13 +614,14 @@ public class MainTest {
 				}
 				if (user instanceof Courier){
 					Courier courier = (Courier)user;
-					System.out.println("Welcome "+courier.getName()+"! We have work for you!");
+					System.out.println("\n--------------NEW COURIER SESSION--------------\n"+"Welcome "+courier.getName()+"! We have work for you!");
 					while (connected){
 						System.out.println("Enter a command.");
 						command = in.nextLine().split(" ");
 						switch(command[0]){
 						case "logout":
 							connected = false;
+							System.out.println("\n--------------COURIER SESSION CLOSED--------------\n");
 							break;
 						case "onDuty":
 							courier.setOnDuty(true);
@@ -531,13 +631,77 @@ public class MainTest {
 							break;
 						case "help":
 							System.out.println("Available commands: logout, onDuty, offDuty");
+							break;
 						default:
 							System.out.println("You entered a wrong command. Please use the command 'help'.");
 							break;
 						}
 					}
-				}		
-			}
+				}
+				break;
+			case "help":
+				System.out.println("Available commands:");
+				System.out.println("login");
+				System.out.println("createAccount");
+				System.out.println("goTomorrow");
+				System.out.println("exit");
+				break;
+			
+			default:
+				System.out.println("You entered a wrong command. Please use'help'.");
+				break;
+				
 		}
+			
+	}
+}
+	
+	public static void executeScenario(String fileName){
+		  FileReader file = null;
+		  BufferedReader reader = null;
+		  LinkedList<String> returnValue = new LinkedList<>();
+		  
+		  try {
+			  // open input stream pointing at fileName
+			  file = new FileReader(fileName);
+			  
+			  // open input buffered reader to read file line by line
+			  reader = new BufferedReader(file);
+			  String line = "";
+			  
+			  
+
+			  
+			  // reading input file line by line
+			  while ((line = reader.readLine()) != null) {
+				  returnValue.add(line);
+			  }
+
+		  } catch (Exception e) {
+		      throw new RuntimeException(e);
+		  } 			
+		  finally {
+			    if (file != null) {
+			      try {
+			        file.close();
+			        reader.close();
+			       
+			      } catch (IOException e) {
+			    	  System.out.println("File not found: " + fileName);
+			        // Ignore issues during closing 
+			      }
+			    }
+			  }
+
+	}
+	
+	/**
+	 * runs a first command line like test. Fulfills the basic requirements of the program
+	 * @param args
+	 */
+
+	public static void main(String[] args) {
+		MainTest.executeCLUI();
+		
 	}
 }
