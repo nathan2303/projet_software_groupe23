@@ -61,6 +61,7 @@ public class Registration implements ActionListener{
 			
 		case 3:
 			frame.setVisible(false);;
+			frame.setVisible(false);
 			new CourierRegistration();
 			break;
 		

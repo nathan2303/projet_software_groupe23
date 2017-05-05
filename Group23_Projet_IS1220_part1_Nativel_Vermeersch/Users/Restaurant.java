@@ -8,6 +8,7 @@ import Food.Dish;
 import Food.Food;
 import Food.Meal;
 import Food.Order;
+import Main.Date;
 import Policies.ShippedOrderSortingPolicy;
 
 public class Restaurant extends User implements Visitor, Observable {
@@ -88,11 +89,6 @@ public void addDish(Dish d) {
 	  this.meals.add(m);
 	  this.items.remove(m.getName());
   }
-
-  public void sortShippedOrders(ShippedOrderSortingPolicy sosp) {
-	  HashMap<Food,Integer> res = sosp.sortOrders(this.shippedOrders);
-	  System.out.println(res);
-  }
   
   public void addOrder(Order order){
 	  this.shippedOrders.add(order);
@@ -128,6 +124,15 @@ public void addDish(Dish d) {
 	  
   }
   
+  public void updateChangeDate(){
+	  for (Observer o : this.registeredCustomersForNotifications){
+		  Customer c = (Customer)o;
+		  if (c.getBirthday().compareTo(new Date())==0)
+			  c.updateBirthday(this);
+		  
+	  }
+  }
+  
   public void notifyObservers(){
 	  for (Observer o : registeredCustomersForNotifications)
 		  o.update(this);
@@ -136,6 +141,8 @@ public void addDish(Dish d) {
   }
   
   	public HashMap<Food,Integer> sortOrders(ShippedOrderSortingPolicy sosp){
+  		System.out.println("Sorted items (from the least to the most): " + sosp.sortOrders2(this.shippedOrders));
+
   		return sosp.sortOrders(this.shippedOrders);
   		
   	}

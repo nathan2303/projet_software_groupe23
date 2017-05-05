@@ -100,7 +100,7 @@ public class Manager extends User {
 	System.out.println("the less selling restaurant is "+lessRes+" with "+lessSell +" of sells");	
 	}
 	
-	public void determineMoreLessActiveCourier(){
+	public void determineMostLessActiveCourier(){
 		HashMap<String, Courier> list = system.getCouriersList();
 		if (list.isEmpty() == false){
 			

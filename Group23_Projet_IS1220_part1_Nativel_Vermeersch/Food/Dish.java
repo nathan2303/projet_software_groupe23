@@ -10,7 +10,7 @@ import Users.Visitor;
 
 public abstract class Dish extends Food {
 
-  public DishType dishType;
+  protected DishType dishType;
   
 
   public Dish(double price, String name, DishType dishType) {

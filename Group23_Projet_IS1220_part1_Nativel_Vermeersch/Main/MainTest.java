@@ -37,7 +37,7 @@ public class MainTest {
 		String[] command;
 		String command2;
 		while (running){
-			System.out.println("Do you already have an account?");
+			System.out.println("You are on the home page. Do you already have an account?");
 			System.out.println("1 - Yes / 2 - No");
 			int hasAccount = in.nextInt();
 			if (hasAccount == 2){
@@ -74,6 +74,7 @@ public class MainTest {
 					double y = in.nextDouble();
 					Address adress = new Address(x,y);
 					System.out.println("Enter your email adress");
+					in.nextLine();
 					String emailAdress = in.nextLine();
 					System.out.println("Enter your phone number");
 					String phoneNumber = in.nextLine();
@@ -171,23 +172,89 @@ public class MainTest {
 					Manager manager = (Manager)user;
 					System.out.println("Welcome "+manager.getSurname()+" "+manager.getName()+"!");
 					while (connected){
-						System.out.println("What do you want to do?");
-						System.out.println("0 - Disconnect");
-						System.out.println("1 - Add user");
-						System.out.println("2 - Remove user");
-						System.out.println("3 - Activate user");
-						System.out.println("4 - Deactivate user");
-						System.out.println("5 - Change profit figure");
-						System.out.println("6 - Compute profit or income");
-						int answer = in.nextInt();
-						switch(answer){
-						case 0:
-							System.out.println("You will be disconnected. Good-bye!");
+						System.out.println("Enter a command.");
+						command = in.nextLine().split(" ");
+						switch(command[0]){
+						case "logout":
 							connected = false;
 							break;
-							
+						case "show":
+							switch(command[1].toLowerCase()){
+							case "orders":
+								System.out.println("\nHISTORY OF ORDERS");
+								System.out.println(system.getCompletedOrders());
+								System.out.println("---------------");
+								break;
+							case "customers":
+								System.out.println("\nLIST OF REGISTERED CUSTOMERS");
+								System.out.println(system.getCustomersList());
+								System.out.println("---------------");
+								break;
+							case "restaurants":
+								System.out.println("\nLIST OF REGISTERED RESTAURANTS AND THEIR MENU");
+								for (Restaurant r : system.getRestaurantsList().values()){
+									System.out.println(r.getName());
+									System.out.println(r.getItems().values()+"\n");
+								}
+								System.out.println("---------------");
+								break;
+							case "couriers":
+								System.out.println("\nLIST OF REGISTERED COURIERS");
+								System.out.println(system.getCouriersList());
+								System.out.println("---------------");
+								break;
+							case "all":
+								System.out.println("\nHISTORY OF ORDERS");
+								System.out.println(system.getCompletedOrders());
+								System.out.println("---------------");
+								System.out.println("\nLIST OF REGISTERED CUSTOMERS");
+								System.out.println(system.getCustomersList());
+								System.out.println("---------------");
+								System.out.println("\nLIST OF REGISTERED RESTAURANTS AND THEIR MENU");
+								for (Restaurant r : system.getRestaurantsList().values()){
+									System.out.println(r.getName());
+									System.out.println(r.getItems().values()+"\n");
+								}
+								System.out.println("---------------");
+								System.out.println("\nLIST OF REGISTERED COURIERS");
+								System.out.println(system.getCouriersList());
+								System.out.println("---------------");
+								break;								
+							default:
+								System.out.println("You entered a wrong command. Please use the command 'help'.");
+								break;
+								
+							}
+							break;
+						case "registerRestaurant":
+							double x = Integer.parseInt(command[2].split(",")[0]);
+							double y = Integer.parseInt(command[2].split(",")[1]);
+							Restaurant r4 = new Restaurant(command[1],command[3],command[4],new Address(x,y));
+							manager.addUser(r4);
+							break;
+						case "registerCustomer":
+							x = Integer.parseInt(command[4].split(",")[0]);
+							y = Integer.parseInt(command[4].split(",")[1]);
+							Customer c4 = new Customer(command[2],command[1],command[3],command[5]);
+							manager.addUser(c4);
+							break;
+						case "registerCourier":
+							x = Integer.parseInt(command[4].split(",")[0]);
+							y = Integer.parseInt(command[4].split(",")[1]);
+							Courier c5 = new Courier(command[2],command[1],command[3],command[5]);
+							manager.addUser(c5);
+							break;
+						case "goTomorrow":
+							Date.goTomorrow();
+							System.out.println("Good morning! We are on " + new Date());
+							break;
+						case "showTotalProfit":
+							System.out.println("Total profit: " + manager.computeTotalProfit());
+						case "help":
+							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant, goTomorrow");
+							break;
 						default:
-							System.out.println("Interface not yet implemented. Please try again later.");
+							System.out.println("You entered a wrong command. Please use 'help'");
 							break;
 						
 						}
@@ -269,7 +336,7 @@ public class MainTest {
 						}
 							break;
 						case "createMeal":
-							System.out.println("Interface not yet implemented. Please try later.");
+							System.out.println("Interface not yet implemented. Please try later (part 2).");
 							break;
 						case "setSpecialOffer":
 							command2 = command[1];
@@ -290,6 +357,7 @@ public class MainTest {
 							System.out.println("logout");
 							System.out.println("addDishRestaurantMenu <dishName> <dishCategory> <foodCategory> <unitPrice>");
 							System.out.println("createMeal");
+							System.out.println("setSpecialOffer <mealName>, removeSpecialOffer <mealName>");
 							break;
 						default:
 							System.out.println("You entered a wrong command. Please use the command 'help'.");
@@ -297,6 +365,30 @@ public class MainTest {
 						}
 					}	
 				}
+				if (user instanceof Courier){
+					Courier courier = (Courier)user;
+					System.out.println("Welcome "+courier.getName()+"! We have work for you!");
+					while (connected){
+						System.out.println("Enter a command.");
+						command = in.nextLine().split(" ");
+						switch(command[0]){
+						case "logout":
+							connected = false;
+							break;
+						case "onDuty":
+							courier.setOnDuty(true);
+							break;
+						case "offDuty":
+							courier.setOnDuty(false);
+							break;
+						case "help":
+							System.out.println("Available commands: logout, onDuty, offDuty");
+						default:
+							System.out.println("You entered a wrong command. Please use the command 'help'.");
+							break;
+						}
+					}
+				}		
 			}
 		}
 	}

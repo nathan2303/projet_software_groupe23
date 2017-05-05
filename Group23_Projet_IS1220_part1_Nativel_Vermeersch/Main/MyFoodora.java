@@ -33,6 +33,7 @@ public class MyFoodora {
   private ArrayList<Order> completedOrders = new ArrayList<Order>();
   private DeliveryPolicy deliveryPolicy;
   private ProfitPolicy profitPolicy;
+  private User loggedOnUser = null;
   private static MyFoodora instance = null;
   private User connectedUser;
   
@@ -96,6 +97,10 @@ public void setConnectedUser(User connectedUser) {
 	  activatedUsersList.remove(u.getUsername());
   }
   
+  /**
+   * adds an order to the history of order of the system
+   * @param order
+   */
   public void addOrder(Order order){
 	  this.completedOrders.add(order);
   }
@@ -222,6 +227,10 @@ public void setConnectedUser(User connectedUser) {
   private MyFoodora(){
   }
   
+  /**
+   * singleton pattern method
+   * @return
+   */
   public static MyFoodora getInstance(){
 	  if (instance == null)
 		  instance = new MyFoodora();
@@ -264,6 +273,10 @@ public void setConnectedUser(User connectedUser) {
 		return profitPolicy;
 	}
 	
+	/**
+	 * this method sets the profit policy but also updates the profit figures (markup etc)
+	 * @param profitPolicy
+	 */
 	public void setProfitPolicy(ProfitPolicy profitPolicy) {
 		this.profitPolicy = profitPolicy;
 		double[] list = this.profitPolicy.computeProfitFigures();
@@ -337,6 +350,14 @@ public void setConnectedUser(User connectedUser) {
 
 	public void setDeliveryCost(double deliveryCost) {
 		this.deliveryCost = deliveryCost;
+	}
+
+	public User getLoggedOnUser() {
+		return loggedOnUser;
+	}
+
+	public void setLoggedOnUser(User loggedOnUser) {
+		this.loggedOnUser = loggedOnUser;
 	}
 
 	public static void main(String[] args) {
