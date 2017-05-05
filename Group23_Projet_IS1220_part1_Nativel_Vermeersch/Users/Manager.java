@@ -1,9 +1,10 @@
 package Users;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import Main.Date;
-import Main.MyFoodora;
 import Policies.DeliveryPolicy;
 import Policies.ProfitPolicy;
 
@@ -79,9 +80,16 @@ public class Manager extends User {
 		this.surname = surname;
 	}
 	
-	public void determineMostLessSellingRestaurant(){
+	public ArrayList<Restaurant> determineMostLessSellingRestaurant(){
 		String mostRes = new String();
 		String lessRes = new String();
+		HashMap<String,Restaurant> res = system.getRestaurantsList();
+		ArrayList<Restaurant> res2 = new ArrayList<Restaurant>(res.values());
+		Collections.sort(res2, new Comparator<Restaurant>(){
+			public int compare(Restaurant r1, Restaurant r2){
+				return (int)r1.getTotalProfit()-(int)r2.getTotalProfit();
+			}
+			});
 		double mostSell = 0.0;
 		double lessSell = system.computeTotalIncome();  // je prends cette valeur initiale car un restaurant ne peut pas vendre plus que le revenu total du système
 		for (String mapKey : system.getRestaurantsList().keySet()){
@@ -97,11 +105,23 @@ public class Manager extends User {
 					
 		}
 	System.out.println("the most selling restaurant is "+mostRes+" with "+mostSell +"of sells");
-	System.out.println("the less selling restaurant is "+lessRes+" with "+lessSell +" of sells");	
+	System.out.println("the least selling restaurant is "+lessRes+" with "+lessSell +" of sells");
+	HashMap<Restaurant, Double> res3 = new HashMap<Restaurant,Double>();
+	for(Restaurant r : res2){
+		System.out.println(r+": "+r.getTotalProfit()+"€");
+		
+	}
+	return res2;
 	}
 	
-	public void determineMostLessActiveCourier(){
+	public ArrayList<Courier> determineMostLessActiveCourier(){
 		HashMap<String, Courier> list = system.getCouriersList();
+		ArrayList<Courier> res2 = new ArrayList<Courier>(list.values());
+		Collections.sort(res2, new Comparator<Courier>(){
+			public int compare(Courier c1, Courier c2){
+				return c1.getDeliveredOrders().size()-c2.getDeliveredOrders().size();
+			}
+			});
 		if (list.isEmpty() == false){
 			
 		String maxres = new String();
@@ -120,8 +140,14 @@ public class Manager extends User {
 			}
 		}
 		System.out.println("the most active courier is" + maxres + ",  with " + maxresOccupation +" courses");
-		System.out.println("the less active courier is" + minres + ", with " + minresOccupation + " courses");
+		System.out.println("the least active courier is" + minres + ", with " + minresOccupation + " courses");
 		}
+		for(Courier c : res2){
+			System.out.println(c+": "+c.getDeliveredOrders().size()+" delivered orders");
+			
+		}
+		
+		return res2;
 	}
 	public String toString(){
 		return this.surname + " " + this.name;

@@ -164,6 +164,20 @@ public class Order {
 	public String toString(){
 		return "\n***** Order no. " + this.id + " *****\nCustomer: " + this.customer + "\nRestaurant: " + this.restaurant + "\nDate: " + this.date + "\nContent: " + this.content + "\nPrice: " + this.price + "€\n****************\n";
 	}
+	
+	
+
+
+
+	public double getProfit() {
+		return profit;
+	}
+
+
+
+	public void setProfit(double profit) {
+		this.profit = profit;
+	}
 
 
 

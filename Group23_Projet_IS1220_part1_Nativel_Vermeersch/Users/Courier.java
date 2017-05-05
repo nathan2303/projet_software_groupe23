@@ -85,6 +85,7 @@ public void setOnDuty(boolean isOnDuty) {
 			system.getOnDutyCouriersList().remove(this);
 	}
 	this.isOnDuty = isOnDuty;
+	System.out.println("[SYSTEM] Courier "+this+"'s duty status has been successfully set on "+isOnDuty);
 	
 		
 }

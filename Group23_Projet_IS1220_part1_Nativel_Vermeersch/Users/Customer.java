@@ -1,6 +1,7 @@
 package Users;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +30,8 @@ public class Customer extends User implements Observer {
   private ArrayList<Order> ordersList = new ArrayList<Order>();
   
   private HashMap<Restaurant,FidelityCard> fidelityCardList;
+  
+  private LinkedList<String> inbox = new LinkedList<String>();
   
   private Random rand = new Random();
 
@@ -139,27 +142,36 @@ public class Customer extends User implements Observer {
 		ArrayList<Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
 		for (Restaurant r : list)
 			this.registerNotifications(r);
-		System.out.println(this.surname + " " + this.name + " has been successfully registered for all notifications.");
+		System.out.println("[SYSTEM] " + this.surname + " " + this.name + " has been successfully registered for all notifications.");
 	}
 	
 	public void unregisterAllNotifications(){
 		ArrayList<Restaurant> list = new ArrayList<Restaurant>(system.getRestaurantsList().values());
 		for (Restaurant r : list)
 			this.unregisterNotifications(r);
-		System.out.println(this.surname + " " + this.name + " has been successfully unregistered for all notifications.");
+		System.out.println("[SYSTEM] " + this.surname + " " + this.name + " has been successfully unregistered for all notifications.");
 	}
 	
 	public void update(Restaurant r) {
-		  System.out.println("Customer " + this.surname + " "+ this.name + " has received the promotional offer from " + r.getName());
-		  System.out.println(r.getGenericDiscountFactor() + " discount for the all the meals!");
-		  System.out.println(r.getSpecialDiscountFactor() + " discount for the meals of the week!");
-		  System.out.println("The new meals of the week: " + r.getMealsOfTheWeek().toString());
+		  System.out.println("[SYSTEM] " + "Customer " + this.surname + " "+ this.name + " has received the promotional offer from the restaurant " + r.getName());
+		  inbox.add("\n-----------------------------\nMessage received on " + new Date() +" from the restaurant " + r + ".\n"+r.getGenericDiscountFactor() + " discount for the all the meals!\n"+r.getSpecialDiscountFactor() + " discount for the meals of the week!\n"+"The new meals of the week: " + r.getMealsOfTheWeek().toString()+"\n-----------------------------\n");
+		 
 	  }
 	
 	public void updateBirthday(Restaurant r){
-		System.out.println("Customer "+this+" has received an offer for his/her birthday from "+r+"!");
+		System.out.println("[SYSTEM] " + "Customer "+this+" has received an offer for his/her birthday from "+r+"!");
+		inbox.add("\n-----------------------------\n"+"Message received on " + new Date() +" from the restaurant " + r + ".\n"+"Happy birthday dear "+this.surname + " "+ this.name +"! We would be very happy to see you at our table today...\n"+r.getGenericDiscountFactor() + " discount for the all the meals!\n"+r.getSpecialDiscountFactor() + " discount for the meals of the week!\n"+"The new meals of the week: " + r.getMealsOfTheWeek().toString()+"\n-----------------------------\n");
+		 
 	}
 	
+	public LinkedList<String> getInbox() {
+		return inbox;
+	}
+
+	public void setInbox(LinkedList<String> inbox) {
+		this.inbox = inbox;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
@@ -216,6 +228,7 @@ public class Customer extends User implements Observer {
 	public void registerPointFidelityCard(Restaurant restaurant){
 		PointFidelityCard card = new PointFidelityCard(restaurant, this);
 		this.getFidelityCardList().put(restaurant, card);
+		System.out.println("[SYSTEM] " + "Customer "+this+" has been successfully registered for a point fidelity card with restaurant "+restaurant+"."); 
 		
 	}
 	
@@ -225,6 +238,7 @@ public class Customer extends User implements Observer {
 	public void registerLotteryFidelityCard(Restaurant restaurant){
 		LotteryFidelityCard card = new  LotteryFidelityCard(restaurant, this);
 		this.getFidelityCardList().put(restaurant, card);
+		System.out.println("[SYSTEM] " + "Customer "+this+" has been successfully registered for a lottery fidelity card with restaurant "+restaurant+"."); 
 		
 	}
 	public static void main(String[] args) {
@@ -243,6 +257,7 @@ public class Customer extends User implements Observer {
 	 */
 	public void unregisterFidelityCard(Restaurant r){
 		this.fidelityCardList.put(r, new BasicFidelityCard(r,this));
+		System.out.println("[SYSTEM] " + "Customer "+this+" has been successfully unregistered for fidelity cards with restaurant "+r+"."); 
 		
 	}
 	
