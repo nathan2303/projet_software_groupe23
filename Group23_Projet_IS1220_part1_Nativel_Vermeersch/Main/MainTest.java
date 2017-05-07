@@ -8,7 +8,13 @@ import Food.DishType;
 import Food.Food;
 import Food.MainDish;
 import Food.Meal;
+import Food.Order;
 import Food.Starter;
+import Policies.FairOccupationDelivery;
+import Policies.FastestDelivery;
+import Policies.TargetProfit_DeliveryCost;
+import Policies.TargetProfit_Markup;
+import Policies.TargetProfit_ServiceFee;
 import Users.Address;
 import Users.Courier;
 import Users.Customer;
@@ -178,6 +184,8 @@ public class MainTest {
 						case "logout":
 							connected = false;
 							break;
+						case "showRestaurantTop":
+							
 						case "show":
 							switch(command[1].toLowerCase()){
 							case "orders":
@@ -230,12 +238,14 @@ public class MainTest {
 							double x = Integer.parseInt(command[2].split(",")[0]);
 							double y = Integer.parseInt(command[2].split(",")[1]);
 							Restaurant r4 = new Restaurant(command[1],command[3],command[4],new Address(x,y));
+							System.out.println("The restaurant "+ command[1] + "has been registered");
 							manager.addUser(r4);
 							break;
 						case "registerCustomer":
 							x = Integer.parseInt(command[4].split(",")[0]);
 							y = Integer.parseInt(command[4].split(",")[1]);
 							Customer c4 = new Customer(command[2],command[1],command[3],command[5]);
+							System.out.println("The customer"+ command[1] + " "+ command[2] + " has been registered");
 							manager.addUser(c4);
 							break;
 						case "registerCourier":
@@ -243,15 +253,85 @@ public class MainTest {
 							y = Integer.parseInt(command[4].split(",")[1]);
 							Courier c5 = new Courier(command[2],command[1],command[3],command[5]);
 							manager.addUser(c5);
+							System.out.println("The courier"+ command[1] + " "+ command[2] + " has been registered");
 							break;
 						case "goTomorrow":
 							Date.goTomorrow();
 							System.out.println("Good morning! We are on " + new Date());
 							break;
 						case "showTotalProfit":
-							System.out.println("Total profit: " + manager.computeTotalProfit());
+							if (command.length == 1)
+								System.out.println("Total profit: " + manager.computeTotalProfit());
+							else{
+								try{
+								int x1 = Integer.parseInt(command[1].split(",")[0]);
+								int y1 = Integer.parseInt(command[1].split(",")[1]);
+								int x2 = Integer.parseInt(command[2].split(",")[0]);
+								int y2 = Integer.parseInt(command[2].split(",")[1]);
+								Date d1 = new Date(x1,y1);
+								Date d2 = new Date(x2,y2);
+								System.out.println("Total profit from "+ d1.toString() + " to " + d2.toString()+ " : " + String.valueOf(manager.computeProfit(d1, d2)));
+								}
+								catch(Exception e){
+									System.out.println("You entered wrong arguments: showTotalProfit <jour,mois> <jour,mois>");
+								}
+								}
+								
+						
+							break;
+						case "setDeliveryPolicy":
+							switch(command[1]){
+							case "fastestDelivery":
+								system.setDeliveryPolicy(new FastestDelivery());
+								System.out.println("Delivery policy changed to fastest delivery policy");
+								break;
+							case "fairOccupationDelivery":
+								system.setDeliveryPolicy(new FairOccupationDelivery());
+								System.out.println("Delivery policy changed to fair occupation delivery policy");
+								break;
+							default:
+								System.out.println("You entered a delivery policy which doesn't exist! Available policies are fastestDelivery and fairOccupationDelivery");
+								break;
+							
+							}
+						case "setProfitPolicy":
+							try{ switch(command[1]){
+								case "deliveryCost":
+									system.setProfitPolicy(new TargetProfit_DeliveryCost(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[3])));
+									System.out.println("Target profit policy changed to delivery cost policy");
+									break;
+								case "markUp":
+									system.setProfitPolicy(new TargetProfit_Markup(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[3])));
+									System.out.println("Target profit policy changed to markup policy");
+									break;
+								case "serviceFee":
+									system.setProfitPolicy(new TargetProfit_ServiceFee(Double.parseDouble(command[2]), Double.parseDouble(command[3]), Double.parseDouble(command[3])));
+									System.out.println("Target profit policy changed to service fee policy");
+									break;
+								default:
+									System.out.println("You entered a profit policy which doesn't exist! Available policies are deliveryCost, markUp, serviceFee");
+									break;
+								}}
+							
+							catch(Exception e){
+								System.out.println("You entered wrong arguments: setProfitPolicy <policyName> <double> <double> <double>");
+								
+							}
+							break;
+						case "associateCard":
+							try{
+								Restaurant r = system.getRestaurantsList().get(command[3]);
+								Customer c = system.getCustomersList().get(command[1]);
+								manager.associateCard(c, r, command[2]);
+								}
+							catch(Exception e){
+								System.out.println("You entered wrong arguments. associateCard <customerName> <point or fidelity><restaurant>");
+								
+							}
+							break;
+								
 						case "help":
-							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant, goTomorrow");
+							System.out.println("Available commands: logout, show customers, show orders, show restaurants, show couriers, show all, registerCustomer, registerCourier, registerRestaurant, goTomorrow, setDeliveryPolicy, setProfitPolicy");
 							break;
 						default:
 							System.out.println("You entered a wrong command. Please use 'help'");
@@ -352,12 +432,27 @@ public class MainTest {
 								}
 							restaurant.removeMealOfTheWeek((Meal)restaurant.getItems().get(command2));
 							break;
+						case "findDeliverer":
+							Order o = null;
+							for ( Order i: restaurant.getShippedOrders())
+								if (i.getId() == Integer.parseInt( command[1]))
+										o = i;
+							Courier c = o.findCourier();
+							if ( c == null)
+								System.out.println("MyFoodora could not find any available courier to ship your order. Please try again later");
+							else
+								System.out.println("Your order has been processed. The courier is" + c.getName());
+							
+								
+							
+							
 						case "help":
 							System.out.println("Available commands for a customer:");
 							System.out.println("logout");
 							System.out.println("addDishRestaurantMenu <dishName> <dishCategory> <foodCategory> <unitPrice>");
 							System.out.println("createMeal");
 							System.out.println("setSpecialOffer <mealName>, removeSpecialOffer <mealName>");
+							System.out.println("findDeliverer <orderName>");
 							break;
 						default:
 							System.out.println("You entered a wrong command. Please use the command 'help'.");
@@ -377,9 +472,11 @@ public class MainTest {
 							break;
 						case "onDuty":
 							courier.setOnDuty(true);
+							System.out.println("You're on duty!");
 							break;
 						case "offDuty":
 							courier.setOnDuty(false);
+							System.out.println("You're off duty!");
 							break;
 						case "help":
 							System.out.println("Available commands: logout, onDuty, offDuty");

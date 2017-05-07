@@ -66,6 +66,23 @@ public class Manager extends User {
 	public String getName() {
 		return name;
 	}
+	public void associateCard(Customer c, Restaurant r, String cardtype){
+		switch(cardtype){
+		case "lottery":
+			c.registerLotteryFidelityCard(r);
+			System.out.println(c.getName() +" has a lottery fidelity card in "+r.getName());
+			break;
+		case "point":
+			c.registerPointFidelityCard(r);
+			System.out.println(c.getName() +" has a lottery fidelity card in "+r.getName());
+			break;
+		default:
+			System.out.println("This fidelity card doesn't exist, the existing fidelity card are point and lottery");
+			
+			
+			
+		}
+	}
 	
 	public void setName(String name) {
 		this.name = name;

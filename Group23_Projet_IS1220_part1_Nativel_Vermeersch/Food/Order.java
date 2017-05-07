@@ -97,6 +97,12 @@ public class Order {
 
 
 
+	public int getId() {
+		return id;
+	}
+
+
+
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
