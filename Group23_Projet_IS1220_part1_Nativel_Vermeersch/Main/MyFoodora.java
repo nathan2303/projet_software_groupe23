@@ -21,8 +21,8 @@ import Users.User;
 public class MyFoodora {
 
   private double markupPercentage = 0.05;
-  private double serviceFee = 5;
-  private double deliveryCost = 7;
+  private double serviceFee = 7;
+  private double deliveryCost = 5;
   private HashMap<String, User> usersList = new HashMap<String, User>();
   private HashMap<String, User> activatedUsersList = new HashMap<String, User>();
   private HashMap<String, Restaurant> restaurantsList = new HashMap<String, Restaurant>();

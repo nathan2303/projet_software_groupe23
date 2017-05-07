@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Food.Dessert;
+import Food.Dish;
 import Food.DishType;
 import Food.Food;
 import Food.MainDish;
@@ -443,7 +444,12 @@ public class MainTest {
 							else
 								System.out.println("Your order has been processed. The courier is" + c.getName());
 							
-								
+						case "showMenuItem":
+							String card = null;
+							for (Dish i : restaurant.getDishes())
+								card = card + " " + i.getName();
+							System.out.println(card);
+							break;
 							
 							
 						case "help":
